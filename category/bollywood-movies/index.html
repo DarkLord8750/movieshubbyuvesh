@@ -2,17 +2,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-US">
 
 <head>
-    <meta charset="UTF-8">
-    <script>if (navigator.userAgent.match(/MSIE|Internet Explorer/i) || navigator.userAgent.match(/Trident\/7\..*?rv:11/i)) { var href = document.location.href; if (!href.match(/[?&]nowprocket/)) { if (href.indexOf("?") == -1) { if (href.indexOf("#") == -1) { document.location.href = href + "?nowprocket=1" } else { document.location.href = href.replace("#", "?nowprocket=1#") } } else { if (href.indexOf("#") == -1) { document.location.href = href + "&nowprocket=1" } else { document.location.href = href.replace("#", "&nowprocket=1#") } } } }</script>
-    <script>class RocketLazyLoadScripts { constructor() { this.triggerEvents = ["keydown", "mousedown", "mousemove", "touchmove", "touchstart", "touchend", "wheel"], this.userEventHandler = this._triggerListener.bind(this), this.touchStartHandler = this._onTouchStart.bind(this), this.touchMoveHandler = this._onTouchMove.bind(this), this.touchEndHandler = this._onTouchEnd.bind(this), this.clickHandler = this._onClick.bind(this), this.interceptedClicks = [], window.addEventListener("pageshow", (e => { this.persisted = e.persisted })), window.addEventListener("DOMContentLoaded", (() => { this._preconnect3rdParties() })), this.delayedScripts = { normal: [], async: [], defer: [] }, this.allJQueries = [] } _addUserInteractionListener(e) { document.hidden ? e._triggerListener() : (this.triggerEvents.forEach((t => window.addEventListener(t, e.userEventHandler, { passive: !0 }))), window.addEventListener("touchstart", e.touchStartHandler, { passive: !0 }), window.addEventListener("mousedown", e.touchStartHandler), document.addEventListener("visibilitychange", e.userEventHandler)) } _removeUserInteractionListener() { this.triggerEvents.forEach((e => window.removeEventListener(e, this.userEventHandler, { passive: !0 }))), document.removeEventListener("visibilitychange", this.userEventHandler) } _onTouchStart(e) { "HTML" !== e.target.tagName && (window.addEventListener("touchend", this.touchEndHandler), window.addEventListener("mouseup", this.touchEndHandler), window.addEventListener("touchmove", this.touchMoveHandler, { passive: !0 }), window.addEventListener("mousemove", this.touchMoveHandler), e.target.addEventListener("click", this.clickHandler), this._renameDOMAttribute(e.target, "onclick", "rocket-onclick")) } _onTouchMove(e) { window.removeEventListener("touchend", this.touchEndHandler), window.removeEventListener("mouseup", this.touchEndHandler), window.removeEventListener("touchmove", this.touchMoveHandler, { passive: !0 }), window.removeEventListener("mousemove", this.touchMoveHandler), e.target.removeEventListener("click", this.clickHandler), this._renameDOMAttribute(e.target, "rocket-onclick", "onclick") } _onTouchEnd(e) { window.removeEventListener("touchend", this.touchEndHandler), window.removeEventListener("mouseup", this.touchEndHandler), window.removeEventListener("touchmove", this.touchMoveHandler, { passive: !0 }), window.removeEventListener("mousemove", this.touchMoveHandler) } _onClick(e) { e.target.removeEventListener("click", this.clickHandler), this._renameDOMAttribute(e.target, "rocket-onclick", "onclick"), this.interceptedClicks.push(e), e.preventDefault(), e.stopPropagation(), e.stopImmediatePropagation() } _replayClicks() { window.removeEventListener("touchstart", this.touchStartHandler, { passive: !0 }), window.removeEventListener("mousedown", this.touchStartHandler), this.interceptedClicks.forEach((e => { e.target.dispatchEvent(new MouseEvent("click", { view: e.view, bubbles: !0, cancelable: !0 })) })) } _renameDOMAttribute(e, t, n) { e.hasAttribute && e.hasAttribute(t) && (event.target.setAttribute(n, event.target.getAttribute(t)), event.target.removeAttribute(t)) } _triggerListener() { this._removeUserInteractionListener(this), "loading" === document.readyState ? document.addEventListener("DOMContentLoaded", this._loadEverythingNow.bind(this)) : this._loadEverythingNow() } _preconnect3rdParties() { let e = []; document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((t => { if (t.hasAttribute("src")) { const n = new URL(t.src).origin; n !== location.origin && e.push({ src: n, crossOrigin: t.crossOrigin || "module" === t.getAttribute("data-rocket-type") }) } })), e = [...new Map(e.map((e => [JSON.stringify(e), e]))).values()], this._batchInjectResourceHints(e, "preconnect") } async _loadEverythingNow() { this.lastBreath = Date.now(), this._delayEventListeners(), this._delayJQueryReady(this), this._handleDocumentWrite(), this._registerAllDelayedScripts(), this._preloadAllScripts(), await this._loadScriptsFromList(this.delayedScripts.normal), await this._loadScriptsFromList(this.delayedScripts.defer), await this._loadScriptsFromList(this.delayedScripts.async); try { await this._triggerDOMContentLoaded(), await this._triggerWindowLoad() } catch (e) { } window.dispatchEvent(new Event("rocket-allScriptsLoaded")), this._replayClicks() } _registerAllDelayedScripts() { document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((e => { e.hasAttribute("src") ? e.hasAttribute("async") && !1 !== e.async ? this.delayedScripts.async.push(e) : e.hasAttribute("defer") && !1 !== e.defer || "module" === e.getAttribute("data-rocket-type") ? this.delayedScripts.defer.push(e) : this.delayedScripts.normal.push(e) : this.delayedScripts.normal.push(e) })) } async _transformScript(e) { return await this._littleBreath(), new Promise((t => { const n = document.createElement("script");[...e.attributes].forEach((e => { let t = e.nodeName; "type" !== t && ("data-rocket-type" === t && (t = "type"), n.setAttribute(t, e.nodeValue)) })), e.hasAttribute("src") ? (n.addEventListener("load", t), n.addEventListener("error", t)) : (n.text = e.text, t()); try { e.parentNode.replaceChild(n, e) } catch (e) { t() } })) } async _loadScriptsFromList(e) { const t = e.shift(); return t ? (await this._transformScript(t), this._loadScriptsFromList(e)) : Promise.resolve() } _preloadAllScripts() { this._batchInjectResourceHints([...this.delayedScripts.normal, ...this.delayedScripts.defer, ...this.delayedScripts.async], "preload") } _batchInjectResourceHints(e, t) { var n = document.createDocumentFragment(); e.forEach((e => { if (e.src) { const i = document.createElement("link"); i.href = e.src, i.rel = t, "preconnect" !== t && (i.as = "script"), e.getAttribute && "module" === e.getAttribute("data-rocket-type") && (i.crossOrigin = !0), e.crossOrigin && (i.crossOrigin = e.crossOrigin), n.appendChild(i) } })), document.head.appendChild(n) } _delayEventListeners() { let e = {}; function t(t, n) { !function (t) { function n(n) { return e[t].eventsToRewrite.indexOf(n) >= 0 ? "rocket-" + n : n } e[t] || (e[t] = { originalFunctions: { add: t.addEventListener, remove: t.removeEventListener }, eventsToRewrite: [] }, t.addEventListener = function () { arguments[0] = n(arguments[0]), e[t].originalFunctions.add.apply(t, arguments) }, t.removeEventListener = function () { arguments[0] = n(arguments[0]), e[t].originalFunctions.remove.apply(t, arguments) }) }(t), e[t].eventsToRewrite.push(n) } function n(e, t) { let n = e[t]; Object.defineProperty(e, t, { get: () => n || function () { }, set(i) { e["rocket" + t] = n = i } }) } t(document, "DOMContentLoaded"), t(window, "DOMContentLoaded"), t(window, "load"), t(window, "pageshow"), t(document, "readystatechange"), n(document, "onreadystatechange"), n(window, "onload"), n(window, "onpageshow") } _delayJQueryReady(e) { let t = window.jQuery; Object.defineProperty(window, "jQuery", { get: () => t, set(n) { if (n && n.fn && !e.allJQueries.includes(n)) { n.fn.ready = n.fn.init.prototype.ready = function (t) { e.domReadyFired ? t.bind(document)(n) : document.addEventListener("rocket-DOMContentLoaded", (() => t.bind(document)(n))) }; const t = n.fn.on; n.fn.on = n.fn.init.prototype.on = function () { if (this[0] === window) { function e(e) { return e.split(" ").map((e => "load" === e || 0 === e.indexOf("load.") ? "rocket-jquery-load" : e)).join(" ") } "string" == typeof arguments[0] || arguments[0] instanceof String ? arguments[0] = e(arguments[0]) : "object" == typeof arguments[0] && Object.keys(arguments[0]).forEach((t => { delete Object.assign(arguments[0], { [e(t)]: arguments[0][t] })[t] })) } return t.apply(this, arguments), this }, e.allJQueries.push(n) } t = n } }) } async _triggerDOMContentLoaded() { this.domReadyFired = !0, await this._littleBreath(), document.dispatchEvent(new Event("rocket-DOMContentLoaded")), await this._littleBreath(), window.dispatchEvent(new Event("rocket-DOMContentLoaded")), await this._littleBreath(), document.dispatchEvent(new Event("rocket-readystatechange")), await this._littleBreath(), document.rocketonreadystatechange && document.rocketonreadystatechange() } async _triggerWindowLoad() { await this._littleBreath(), window.dispatchEvent(new Event("rocket-load")), await this._littleBreath(), window.rocketonload && window.rocketonload(), await this._littleBreath(), this.allJQueries.forEach((e => e(window).trigger("rocket-jquery-load"))), await this._littleBreath(); const e = new Event("rocket-pageshow"); e.persisted = this.persisted, window.dispatchEvent(e), await this._littleBreath(), window.rocketonpageshow && window.rocketonpageshow({ persisted: this.persisted }) } _handleDocumentWrite() { const e = new Map; document.write = document.writeln = function (t) { const n = document.currentScript, i = document.createRange(), r = n.parentElement; let o = e.get(n); void 0 === o && (o = n.nextSibling, e.set(n, o)); const s = document.createDocumentFragment(); i.setStart(s, 0), s.appendChild(i.createContextualFragment(t)), r.insertBefore(s, o) } } async _littleBreath() { Date.now() - this.lastBreath > 45 && (await this._requestAnimFrame(), this.lastBreath = Date.now()) } async _requestAnimFrame() { return document.hidden ? new Promise((e => setTimeout(e))) : new Promise((e => requestAnimationFrame(e))) } static run() { const e = new RocketLazyLoadScripts; e._addUserInteractionListener(e) } } RocketLazyLoadScripts.run();</script>
-    <meta name="robots" content="index,follow">
-    <meta http-equiv="content-language" content="en">
-    <title>Movies Hub By Uvesh PC and smartphone Movies of Bollywood Hollywood Hindi Cartoon Animation TV Shows Web
-        Series at
-        Movies Hub By Uvesh</title>
-    <link rel="preload" as="font" href="fontawesome-webfont.woff2" crossorigin>
-    <link rel="preload" as="font" href="JTUSjIg1_i6t8kCHKm459Wlhyw.woff2" crossorigin>
-    <style>
+	<meta charset="UTF-8">
+	<script>if (navigator.userAgent.match(/MSIE|Internet Explorer/i) || navigator.userAgent.match(/Trident\/7\..*?rv:11/i)) { var href = document.location.href; if (!href.match(/[?&]nowprocket/)) { if (href.indexOf("?") == -1) { if (href.indexOf("#") == -1) { document.location.href = href + "?nowprocket=1" } else { document.location.href = href.replace("#", "?nowprocket=1#") } } else { if (href.indexOf("#") == -1) { document.location.href = href + "&nowprocket=1" } else { document.location.href = href.replace("#", "&nowprocket=1#") } } } }</script>
+	<script>class RocketLazyLoadScripts { constructor() { this.triggerEvents = ["keydown", "mousedown", "mousemove", "touchmove", "touchstart", "touchend", "wheel"], this.userEventHandler = this._triggerListener.bind(this), this.touchStartHandler = this._onTouchStart.bind(this), this.touchMoveHandler = this._onTouchMove.bind(this), this.touchEndHandler = this._onTouchEnd.bind(this), this.clickHandler = this._onClick.bind(this), this.interceptedClicks = [], window.addEventListener("pageshow", (e => { this.persisted = e.persisted })), window.addEventListener("DOMContentLoaded", (() => { this._preconnect3rdParties() })), this.delayedScripts = { normal: [], async: [], defer: [] }, this.allJQueries = [] } _addUserInteractionListener(e) { document.hidden ? e._triggerListener() : (this.triggerEvents.forEach((t => window.addEventListener(t, e.userEventHandler, { passive: !0 }))), window.addEventListener("touchstart", e.touchStartHandler, { passive: !0 }), window.addEventListener("mousedown", e.touchStartHandler), document.addEventListener("visibilitychange", e.userEventHandler)) } _removeUserInteractionListener() { this.triggerEvents.forEach((e => window.removeEventListener(e, this.userEventHandler, { passive: !0 }))), document.removeEventListener("visibilitychange", this.userEventHandler) } _onTouchStart(e) { "HTML" !== e.target.tagName && (window.addEventListener("touchend", this.touchEndHandler), window.addEventListener("mouseup", this.touchEndHandler), window.addEventListener("touchmove", this.touchMoveHandler, { passive: !0 }), window.addEventListener("mousemove", this.touchMoveHandler), e.target.addEventListener("click", this.clickHandler), this._renameDOMAttribute(e.target, "onclick", "rocket-onclick")) } _onTouchMove(e) { window.removeEventListener("touchend", this.touchEndHandler), window.removeEventListener("mouseup", this.touchEndHandler), window.removeEventListener("touchmove", this.touchMoveHandler, { passive: !0 }), window.removeEventListener("mousemove", this.touchMoveHandler), e.target.removeEventListener("click", this.clickHandler), this._renameDOMAttribute(e.target, "rocket-onclick", "onclick") } _onTouchEnd(e) { window.removeEventListener("touchend", this.touchEndHandler), window.removeEventListener("mouseup", this.touchEndHandler), window.removeEventListener("touchmove", this.touchMoveHandler, { passive: !0 }), window.removeEventListener("mousemove", this.touchMoveHandler) } _onClick(e) { e.target.removeEventListener("click", this.clickHandler), this._renameDOMAttribute(e.target, "rocket-onclick", "onclick"), this.interceptedClicks.push(e), e.preventDefault(), e.stopPropagation(), e.stopImmediatePropagation() } _replayClicks() { window.removeEventListener("touchstart", this.touchStartHandler, { passive: !0 }), window.removeEventListener("mousedown", this.touchStartHandler), this.interceptedClicks.forEach((e => { e.target.dispatchEvent(new MouseEvent("click", { view: e.view, bubbles: !0, cancelable: !0 })) })) } _renameDOMAttribute(e, t, n) { e.hasAttribute && e.hasAttribute(t) && (event.target.setAttribute(n, event.target.getAttribute(t)), event.target.removeAttribute(t)) } _triggerListener() { this._removeUserInteractionListener(this), "loading" === document.readyState ? document.addEventListener("DOMContentLoaded", this._loadEverythingNow.bind(this)) : this._loadEverythingNow() } _preconnect3rdParties() { let e = []; document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((t => { if (t.hasAttribute("src")) { const n = new URL(t.src).origin; n !== location.origin && e.push({ src: n, crossOrigin: t.crossOrigin || "module" === t.getAttribute("data-rocket-type") }) } })), e = [...new Map(e.map((e => [JSON.stringify(e), e]))).values()], this._batchInjectResourceHints(e, "preconnect") } async _loadEverythingNow() { this.lastBreath = Date.now(), this._delayEventListeners(), this._delayJQueryReady(this), this._handleDocumentWrite(), this._registerAllDelayedScripts(), this._preloadAllScripts(), await this._loadScriptsFromList(this.delayedScripts.normal), await this._loadScriptsFromList(this.delayedScripts.defer), await this._loadScriptsFromList(this.delayedScripts.async); try { await this._triggerDOMContentLoaded(), await this._triggerWindowLoad() } catch (e) { } window.dispatchEvent(new Event("rocket-allScriptsLoaded")), this._replayClicks() } _registerAllDelayedScripts() { document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((e => { e.hasAttribute("src") ? e.hasAttribute("async") && !1 !== e.async ? this.delayedScripts.async.push(e) : e.hasAttribute("defer") && !1 !== e.defer || "module" === e.getAttribute("data-rocket-type") ? this.delayedScripts.defer.push(e) : this.delayedScripts.normal.push(e) : this.delayedScripts.normal.push(e) })) } async _transformScript(e) { return await this._littleBreath(), new Promise((t => { const n = document.createElement("script");[...e.attributes].forEach((e => { let t = e.nodeName; "type" !== t && ("data-rocket-type" === t && (t = "type"), n.setAttribute(t, e.nodeValue)) })), e.hasAttribute("src") ? (n.addEventListener("load", t), n.addEventListener("error", t)) : (n.text = e.text, t()); try { e.parentNode.replaceChild(n, e) } catch (e) { t() } })) } async _loadScriptsFromList(e) { const t = e.shift(); return t ? (await this._transformScript(t), this._loadScriptsFromList(e)) : Promise.resolve() } _preloadAllScripts() { this._batchInjectResourceHints([...this.delayedScripts.normal, ...this.delayedScripts.defer, ...this.delayedScripts.async], "preload") } _batchInjectResourceHints(e, t) { var n = document.createDocumentFragment(); e.forEach((e => { if (e.src) { const i = document.createElement("link"); i.href = e.src, i.rel = t, "preconnect" !== t && (i.as = "script"), e.getAttribute && "module" === e.getAttribute("data-rocket-type") && (i.crossOrigin = !0), e.crossOrigin && (i.crossOrigin = e.crossOrigin), n.appendChild(i) } })), document.head.appendChild(n) } _delayEventListeners() { let e = {}; function t(t, n) { !function (t) { function n(n) { return e[t].eventsToRewrite.indexOf(n) >= 0 ? "rocket-" + n : n } e[t] || (e[t] = { originalFunctions: { add: t.addEventListener, remove: t.removeEventListener }, eventsToRewrite: [] }, t.addEventListener = function () { arguments[0] = n(arguments[0]), e[t].originalFunctions.add.apply(t, arguments) }, t.removeEventListener = function () { arguments[0] = n(arguments[0]), e[t].originalFunctions.remove.apply(t, arguments) }) }(t), e[t].eventsToRewrite.push(n) } function n(e, t) { let n = e[t]; Object.defineProperty(e, t, { get: () => n || function () { }, set(i) { e["rocket" + t] = n = i } }) } t(document, "DOMContentLoaded"), t(window, "DOMContentLoaded"), t(window, "load"), t(window, "pageshow"), t(document, "readystatechange"), n(document, "onreadystatechange"), n(window, "onload"), n(window, "onpageshow") } _delayJQueryReady(e) { let t = window.jQuery; Object.defineProperty(window, "jQuery", { get: () => t, set(n) { if (n && n.fn && !e.allJQueries.includes(n)) { n.fn.ready = n.fn.init.prototype.ready = function (t) { e.domReadyFired ? t.bind(document)(n) : document.addEventListener("rocket-DOMContentLoaded", (() => t.bind(document)(n))) }; const t = n.fn.on; n.fn.on = n.fn.init.prototype.on = function () { if (this[0] === window) { function e(e) { return e.split(" ").map((e => "load" === e || 0 === e.indexOf("load.") ? "rocket-jquery-load" : e)).join(" ") } "string" == typeof arguments[0] || arguments[0] instanceof String ? arguments[0] = e(arguments[0]) : "object" == typeof arguments[0] && Object.keys(arguments[0]).forEach((t => { delete Object.assign(arguments[0], { [e(t)]: arguments[0][t] })[t] })) } return t.apply(this, arguments), this }, e.allJQueries.push(n) } t = n } }) } async _triggerDOMContentLoaded() { this.domReadyFired = !0, await this._littleBreath(), document.dispatchEvent(new Event("rocket-DOMContentLoaded")), await this._littleBreath(), window.dispatchEvent(new Event("rocket-DOMContentLoaded")), await this._littleBreath(), document.dispatchEvent(new Event("rocket-readystatechange")), await this._littleBreath(), document.rocketonreadystatechange && document.rocketonreadystatechange() } async _triggerWindowLoad() { await this._littleBreath(), window.dispatchEvent(new Event("rocket-load")), await this._littleBreath(), window.rocketonload && window.rocketonload(), await this._littleBreath(), this.allJQueries.forEach((e => e(window).trigger("rocket-jquery-load"))), await this._littleBreath(); const e = new Event("rocket-pageshow"); e.persisted = this.persisted, window.dispatchEvent(e), await this._littleBreath(), window.rocketonpageshow && window.rocketonpageshow({ persisted: this.persisted }) } _handleDocumentWrite() { const e = new Map; document.write = document.writeln = function (t) { const n = document.currentScript, i = document.createRange(), r = n.parentElement; let o = e.get(n); void 0 === o && (o = n.nextSibling, e.set(n, o)); const s = document.createDocumentFragment(); i.setStart(s, 0), s.appendChild(i.createContextualFragment(t)), r.insertBefore(s, o) } } async _littleBreath() { Date.now() - this.lastBreath > 45 && (await this._requestAnimFrame(), this.lastBreath = Date.now()) } async _requestAnimFrame() { return document.hidden ? new Promise((e => setTimeout(e))) : new Promise((e => requestAnimationFrame(e))) } static run() { const e = new RocketLazyLoadScripts; e._addUserInteractionListener(e) } } RocketLazyLoadScripts.run();</script>
+	<meta name="robots" content="index,follow">
+	<meta http-equiv="content-language" content="en">
+	<title>All Bollywood Movies Archives - Movies Hub By Uvesh - Movies Hub By Uvesh</title>
+	<link rel="preload" as="font"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/fonts/fontawesome-webfont.woff2" crossorigin>
+	<link rel="preload" as="font" href="https://fonts.gstatic.com/s/montserrat/v26/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2"
+		crossorigin>
+	<link rel="preload" as="font"
+		href="https://fonts.gstatic.com/s/oswald/v53/TK3_WkUHHAIjg75cFRf3bXL8LICs1_FvsUZiZQ.woff2" crossorigin>
+	<style>
 		:where(.wp-block-button__link) {
 			border-radius: 9999px;
 			box-shadow: none;
@@ -303,8 +305,7 @@
 		footer,
 		header,
 		main,
-		nav,
-		section {
+		nav {
 			display: block
 		}
 
@@ -325,11 +326,6 @@
 		a:active,
 		a:hover {
 			outline: 0
-		}
-
-		b,
-		strong {
-			font-weight: 700
 		}
 
 		img {
@@ -471,12 +467,14 @@
 				max-width: 100% !important
 			}
 
+			h2,
 			h3,
 			p {
 				orphans: 3;
 				widows: 3
 			}
 
+			h2,
 			h3 {
 				page-break-after: avoid
 			}
@@ -521,12 +519,20 @@
 			content: "\f002"
 		}
 
+		.fa-heart:before {
+			content: "\f004"
+		}
+
 		.fa-chevron-left:before {
 			content: "\f053"
 		}
 
 		.fa-reorder:before {
 			content: "\f0c9"
+		}
+
+		.fa-play-circle:before {
+			content: "\f144"
 		}
 
 		* {
@@ -589,30 +595,26 @@
 			cursor: pointer
 		}
 
-		h3,
-		h4 {
+		h2,
+		h3 {
 			font-family: inherit;
 			font-weight: 500;
 			line-height: 1.1;
 			color: inherit
 		}
 
+		h2,
 		h3 {
 			margin-top: 20px;
 			margin-bottom: 10px
 		}
 
-		h4 {
-			margin-top: 10px;
-			margin-bottom: 10px
+		h2 {
+			font-size: 30px
 		}
 
 		h3 {
 			font-size: 24px
-		}
-
-		h4 {
-			font-size: 18px
 		}
 
 		p {
@@ -1007,6 +1009,21 @@
 			border-radius: 2px
 		}
 
+		.btn-block {
+			display: block;
+			width: 100%
+		}
+
+		.btn-block+.btn-block {
+			margin-top: 5px
+		}
+
+		input[type=button].btn-block,
+		input[type=reset].btn-block,
+		input[type=submit].btn-block {
+			width: 100%
+		}
+
 		.fade {
 			opacity: 0;
 			-webkit-transition: opacity .15s linear;
@@ -1237,6 +1254,77 @@
 			border-top-right-radius: 0
 		}
 
+		.pagination {
+			display: inline-block;
+			padding-left: 0;
+			margin: 20px 0;
+			border-radius: 4px
+		}
+
+		.pagination>li {
+			display: inline
+		}
+
+		.pagination>li>a,
+		.pagination>li>span {
+			position: relative;
+			float: left;
+			padding: 6px 12px;
+			margin-left: -1px;
+			line-height: 1.42857143;
+			color: #337ab7;
+			text-decoration: none;
+			background-color: #fff;
+			border: 1px solid #ddd
+		}
+
+		.pagination>li:first-child>a,
+		.pagination>li:first-child>span {
+			margin-left: 0;
+			border-top-left-radius: 4px;
+			border-bottom-left-radius: 4px
+		}
+
+		.pagination>li:last-child>a,
+		.pagination>li:last-child>span {
+			border-top-right-radius: 4px;
+			border-bottom-right-radius: 4px
+		}
+
+		.pagination>li>a:focus,
+		.pagination>li>a:hover,
+		.pagination>li>span:focus,
+		.pagination>li>span:hover {
+			color: #23527c;
+			background-color: #eee;
+			border-color: #ddd
+		}
+
+		.pagination>.active>a,
+		.pagination>.active>a:focus,
+		.pagination>.active>a:hover,
+		.pagination>.active>span,
+		.pagination>.active>span:focus,
+		.pagination>.active>span:hover {
+			z-index: 2;
+			color: #fff;
+			cursor: default;
+			background-color: #337ab7;
+			border-color: #337ab7
+		}
+
+		.pagination>.disabled>a,
+		.pagination>.disabled>a:focus,
+		.pagination>.disabled>a:hover,
+		.pagination>.disabled>span,
+		.pagination>.disabled>span:focus,
+		.pagination>.disabled>span:hover {
+			color: #777;
+			cursor: not-allowed;
+			background-color: #fff;
+			border-color: #ddd
+		}
+
 		.label {
 			display: inline;
 			padding: .2em .6em .3em;
@@ -1271,11 +1359,6 @@
 			margin-bottom: 20px;
 			border: 1px solid transparent;
 			border-radius: 4px
-		}
-
-		.alert h4 {
-			margin-top: 0;
-			color: inherit
 		}
 
 		.alert>p,
@@ -1422,6 +1505,10 @@
 		.modal-footer .btn+.btn {
 			margin-bottom: 0;
 			margin-left: 5px
+		}
+
+		.modal-footer .btn-block+.btn-block {
+			margin-left: 0
 		}
 
 		.modal-scrollbar-measure {
@@ -1748,10 +1835,75 @@
 			position: fixed
 		}
 
+		.jtip-top {
+			padding: 5px 12px;
+			background: #eee;
+			color: #333;
+			font-weight: 700;
+			margin: 0 -13px 12px;
+			font-size: 12px
+		}
+
+		.jtip-top .jt-info {
+			display: inline-block;
+			padding: 3px 0;
+			margin-right: 20px
+		}
+
+		.jtip-top .jt-info.jt-imdb {
+			padding: 1px 7px;
+			background: #fed500;
+			margin-right: 15px
+		}
+
+		.jtip-bottom {
+			margin-top: 15px
+		}
+
+		.jtip-bottom i {
+			font-size: 16px
+		}
+
+		.jtip-quality {
+			position: absolute;
+			top: -27px;
+			right: 0;
+			line-height: 1em;
+			padding: 3px 5px;
+			font-size: 10px;
+			background: #333;
+			color: #fff;
+			text-transform: uppercase;
+			font-family: Montserrat
+		}
+
+		.jtip-quality {
+			top: 13px;
+			right: 12px
+		}
+
 		@-ms-keyframes cssload-rotate {
 			100% {
 				-ms-transform: rotate(360deg)
 			}
+		}
+
+		@font-face {
+			font-display: swap;
+			font-family: Montserrat;
+			font-style: normal;
+			font-weight: 400;
+			src: url(https://fonts.gstatic.com/s/montserrat/v26/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2) format('woff2');
+			unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
+		}
+
+		@font-face {
+			font-display: swap;
+			font-family: Montserrat;
+			font-style: normal;
+			font-weight: 700;
+			src: url(https://fonts.gstatic.com/s/montserrat/v26/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2) format('woff2');
+			unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
 		}
 
 		@font-face {
@@ -1763,6 +1915,8 @@
 			unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
 		}
 
+		.movies-list .ml-item .ml-mask:after,
+		.movies-list .ml-item .ml-mask:before,
 		header .header-logo:after {
 			content: ""
 		}
@@ -1778,8 +1932,8 @@
 			position: relative
 		}
 
-		h3,
-		h4 {
+		h2,
+		h3 {
 			font-weight: 700
 		}
 
@@ -1812,8 +1966,22 @@
 			display: inline-block
 		}
 
-		.clr {
-			clear: both
+		.btn-block {
+			border-radius: 3px
+		}
+
+		.btn-successful {
+			background: #79c143;
+			border: none;
+			border-bottom: 3px solid #73ad38;
+			color: #fff !important
+		}
+
+		.btn-successful:active,
+		.btn-successful:focus,
+		.btn-successful:hover {
+			background: #70b63d;
+			border-bottom: 3px solid #63a235
 		}
 
 		.btn-primary {
@@ -1865,7 +2033,7 @@
 		}
 
 		#logo {
-			background-image: url(https://mkvcinemas.foo/data/themes/PsyPlay/assets/css/img/logo-dark.png);
+			background-image: url(https://darklord8750.github.io/movieshubbyuvesh/data/themes/PsyPlay/assets/css/img/logo-dark.png);
 			background-position: 50% 25%;
 			background-size: cover;
 			height: 51px;
@@ -1998,6 +2166,14 @@
 			padding-top: 70px
 		}
 
+		.page-category .pad {
+			height: 20px !important
+		}
+
+		.movies-list-wrap .ml-title span {
+			font-family: Montserrat
+		}
+
 		p.none {
 			margin-left: 10px
 		}
@@ -2008,13 +2184,135 @@
 			display: block
 		}
 
-		.page-detail .pad {
-			height: 20px
+		.movies-list-wrap {
+			display: block;
+			overflow: hidden;
+			margin: 0 0 40px
 		}
 
-		.main-detail {
-			width: 1200px;
-			margin: 0 auto
+		.movies-list-wrap .ml-title {
+			display: block;
+			margin-bottom: 10px
+		}
+
+		.movies-list-wrap .ml-title span {
+			font-size: 18px;
+			font-weight: 400;
+			display: inline-block;
+			padding: 0 20px;
+			height: 40px;
+			line-height: 40px;
+			background: #79c142;
+			color: #fff;
+			border-radius: 3px 3px 0 0
+		}
+
+		.movies-list-wrap .ml-title span i {
+			font-size: 14px
+		}
+
+		.movies-list {
+			display: block;
+			margin: 0 -1%
+		}
+
+		.movies-list .ml-item {
+			width: 10.5%;
+			margin: 1%;
+			float: left;
+			position: relative;
+			height: 260px;
+			overflow: hidden
+		}
+
+		.movies-list .ml-item .mli-quality {
+			background: #fed700;
+			border-radius: 3px;
+			color: #222;
+			font-size: 11px;
+			font-weight: 500;
+			height: auto;
+			line-height: normal;
+			padding: 4px 6px;
+			position: absolute;
+			right: 8px;
+			top: 8px;
+			width: auto;
+			z-index: 4
+		}
+
+		.movies-list .ml-item .mli-thumb {
+			width: 100%;
+			height: 100%
+		}
+
+		.movies-list .ml-item .mli-info {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: auto;
+			padding: 10px;
+			background: url(https://darklord8750.github.io/movieshubbyuvesh/data/themes/PsyPlay/assets/css/img/mask-title.png) top repeat-x;
+			z-index: 5
+		}
+
+		.movies-list .ml-item .mli-info h2 {
+			font-size: 14px;
+			margin: 0;
+			font-weight: 400;
+			text-align: center;
+			color: #fff;
+			text-shadow: 0 0 2px rgba(0, 0, 0, .6)
+		}
+
+		.movies-list .ml-item .ml-mask {
+			display: inline-block;
+			overflow: hidden;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%
+		}
+
+		.movies-list .ml-item .ml-mask:before {
+			background: rgba(0, 0, 0, .6);
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			opacity: 0
+		}
+
+		.movies-list .ml-item .ml-mask:hover:before {
+			opacity: 1
+		}
+
+		.movies-list .ml-item .ml-mask:after {
+			width: 55px;
+			height: 55px;
+			background-image: url(https://darklord8750.github.io/movieshubbyuvesh/data/themes/PsyPlay/assets/css/img/btn-overlay.png);
+			background-position: 50% 25%;
+			background-size: cover;
+			opacity: 0;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -27.5px;
+			margin-left: -27.5px
+		}
+
+		.movies-list .ml-item .ml-mask:hover:after {
+			opacity: 1
+		}
+
+		.movies-list .ml-item .ml-mask:after,
+		.movies-list .ml-item .ml-mask:before {
+			transition: all .2s ease 0;
+			-webkit-transition: .2s 0;
+			z-index: 4
 		}
 
 		#overlay {
@@ -2094,8 +2392,7 @@
 			vertical-align: text-top
 		}
 
-		#footer .footer-link-head,
-		p.author-name {
+		#footer .footer-link-head {
 			font-size: 16px
 		}
 
@@ -2115,87 +2412,6 @@
 			margin-right: 60px
 		}
 
-		.comment-content.entry.clr {
-			color: #aaa
-		}
-
-		.comment-avatar img {
-			border-radius: 5px;
-			-webkit-border-radius: 5px;
-			-moz-border-radius: 5px;
-			height: 40px;
-			width: 40px
-		}
-
-		.comment-avatar {
-			float: left
-		}
-
-		.comment-author {
-			margin-left: 15px;
-			float: left;
-			padding: 4px
-		}
-
-		p.author-name {
-			margin: 0;
-			font-weight: 700;
-			color: #fff
-		}
-
-		p.comment-date {
-			font-size: 12px
-		}
-
-		a.comment-reply-link {
-			color: #fff;
-			font-size: 11px;
-			padding: 5px;
-			background: #79c143
-		}
-
-		a.comment-reply-link:hover {
-			background: #6d6d6d
-		}
-
-		.reply.comment-reply-link {
-			margin-bottom: 15px
-		}
-
-		.comment-cont {
-			margin-bottom: 13px;
-			border-bottom: 1px solid #eaeaea
-		}
-
-		.post-comments .comment-cont:last-child {
-			border-bottom: 0
-		}
-
-		#comments h3.heading {
-			margin-bottom: 25px
-		}
-
-		section#comments {
-			padding: 10px
-		}
-
-		.infopage {
-			background: #252525;
-			box-shadow: 0 0 5px rgba(0, 0, 0, .1)
-		}
-
-		.infopage .infopage-head {
-			display: block;
-			padding: 10px 20px;
-			background: #333;
-			border-bottom: none;
-			font-size: 20px
-		}
-
-		.infopage .content {
-			padding: 15px 20px
-		}
-
 		.box {
 			margin-bottom: 20px;
 			background: #222;
@@ -2203,6 +2419,7 @@
 			overflow: hidden
 		}
 
+		#pagination,
 		.modal-cuz .modal-footer,
 		.search-suggest ul li.ss-bottom a {
 			text-align: center
@@ -2293,6 +2510,10 @@
 			height: inherit
 		}
 
+		.modal-dialog .modal-body .btn-block {
+			padding: 8px 12px
+		}
+
 		.modal-dialog .modal-body label {
 			font-weight: 400
 		}
@@ -2314,6 +2535,32 @@
 			font-size: 12px;
 			margin-bottom: 10px;
 			margin-top: 5px
+		}
+
+		#pagination {
+			margin-top: 30px
+		}
+
+		.pagination>li>a,
+		.pagination>li>span {
+			border: none;
+			background: #252525;
+			color: #ddd
+		}
+
+		.pagination>.active>a,
+		.pagination>.active>a:focus,
+		.pagination>.active>a:hover,
+		.pagination>.active>span,
+		.pagination>.active>span:focus,
+		.pagination>.active>span:hover {
+			background: #79c142;
+			border: none
+		}
+
+		.pagination>li>a {
+			margin: 0 5px;
+			border-radius: 3px
 		}
 
 		.cat-more {
@@ -2437,6 +2684,10 @@
 				width: 1300px
 			}
 
+			.movies-list .ml-item {
+				height: 200px
+			}
+
 			#search {
 				width: 275px
 			}
@@ -2473,8 +2724,12 @@
 				margin-top: 14px
 			}
 
-			.main-detail {
-				width: 100%
+			.movies-list .ml-item {
+				height: 180px
+			}
+
+			.movies-list .ml-item .mli-info h2 {
+				font-size: 12px
 			}
 
 			footer .footer-one {
@@ -2544,6 +2799,11 @@
 
 			footer .footer-one {
 				float: left
+			}
+
+			.movies-list .ml-item {
+				width: 14.6%;
+				height: 230px
 			}
 
 			#filter {
@@ -2752,6 +3012,17 @@
 				margin-top: 0 !important
 			}
 
+			.movies-list .ml-item {
+				width: 23%;
+				margin: 1%;
+				height: 260px
+			}
+
+			.movies-list .ml-item .mli-info h2 {
+				font-weight: 700;
+				font-size: 14px
+			}
+
 			.filter-toggle {
 				background: #252525;
 				height: 30px;
@@ -2762,9 +3033,24 @@
 				margin-top: 5px
 			}
 
+			.movies-list-wrap {
+				margin-bottom: 20px
+			}
+
 			footer {
 				margin-top: 20px;
 				background: #222
+			}
+
+			.movies-list-wrap .ml-title span {
+				font-family: Arial, Helvetica, sans-serif;
+				background: 0 0 !important;
+				padding: 0;
+				font-weight: 700;
+				font-size: 16px;
+				color: #eee;
+				height: 38px;
+				line-height: 38px
 			}
 		}
 
@@ -2809,6 +3095,10 @@
 		}
 
 		@media screen and (max-width:640px) {
+			.movies-list .ml-item {
+				height: 200px
+			}
+
 			#menu .sub-container ul.sub-menu li {
 				border-bottom: none;
 				width: 31.3%;
@@ -2839,6 +3129,12 @@
 		}
 
 		@media screen and (max-width:520px) {
+			.movies-list .ml-item {
+				height: 250px;
+				margin: 1%;
+				width: 31.3%
+			}
+
 			#logo {
 				width: 103px;
 				height: 27px
@@ -2881,6 +3177,12 @@
 				font-size: 12px
 			}
 
+			.movies-list .ml-item {
+				height: 250px;
+				margin: 1.5%;
+				width: 47%
+			}
+
 			#footer .col-lg-4 img {
 				width: 80%
 			}
@@ -2906,6 +3208,16 @@
 			}
 		}
 
+		@media screen and (max-width:359px) {
+			.movies-list .ml-item {
+				height: 230px
+			}
+		}
+
+		#hidden_tip {
+			display: none
+		}
+
 		.sl-button {
 			color: #ccc;
 			padding: 10px 20px;
@@ -2924,6 +3236,29 @@
 			color: #666
 		}
 
+		.jtip-bottom a.sl-button {
+			background: #eee;
+			width: 100%;
+			padding: 6px 12px;
+			color: #333;
+			border-radius: 3px;
+			border-bottom: 3px solid #ddd !important;
+			margin-top: 10px
+		}
+
+		.jtip-bottom a.sl-button:hover {
+			background: #e5e5e5 !important;
+			border-bottom: 3px solid #ccc !important
+		}
+
+		.jtip-bottom a.sl-button.liked i.fa {
+			color: #ec4d4d
+		}
+
+		.jtip-bottom a.sl-button i.fa {
+			margin-right: 10px
+		}
+
 		.search-content button {
 			position: relative;
 			float: right;
@@ -2933,10 +3268,6 @@
 			border: none;
 			height: 0;
 			width: 0
-		}
-
-		.infopage.comment {
-			margin-top: 25px
 		}
 
 		.pt-login,
@@ -2983,6 +3314,11 @@
 			margin-bottom: 10px
 		}
 
+		#pt-user-modal .modal-dialog .modal-body .btn-block {
+			font-size: 14px;
+			font-weight: 400
+		}
+
 		.nav>li>a:focus,
 		.nav>li>a:hover {
 			background-color: #303030;
@@ -3011,6 +3347,15 @@
 			color: #fff;
 			background-color: #1c1c1c;
 			border: 1px solid #464646
+		}
+
+		.jtip-top {
+			background: #2e2e2e;
+			color: #fff
+		}
+
+		.jtip-top .jt-info.jt-imdb {
+			color: #2e2e2e
 		}
 
 		.nav>li>a:hover {
@@ -3108,7 +3453,21 @@
 		}
 
 		#logo {
-			background-image: url(https://mkvcinemas.foo/media/2019/05/yyyy-1.png)
+			background-image: url(https://darklord8750.github.io/movieshubbyuvesh/logo.png)
+		}
+
+		.movies-list .ml-item,
+		.movies-list .ml-item .mli-info {
+			border-radius: 5px !important
+		}
+
+		.movies-list .ml-item:hover {
+			border: 4px solid #e45cc0
+		}
+
+		.btn-successful,
+		.movies-list-wrap .ml-title span {
+			background: #e45cc0
 		}
 
 		a {
@@ -3122,6 +3481,17 @@
 
 		#searchform .fa {
 			color: #e45cc0
+		}
+
+		.btn-successful {
+			border-bottom: 3px solid #d650b2
+		}
+
+		.btn-successful:active,
+		.btn-successful:focus,
+		.btn-successful:hover {
+			background: #d655b4;
+			border-bottom: 3px solid #cc4ba9
 		}
 
 		.btn-primary:active,
@@ -3149,11 +3519,28 @@
 			border-top: 1px solid #e45cc0
 		}
 
+		.movies-list .ml-item .ml-mask:after {
+			background-image: url(https://darklord8750.github.io/movieshubbyuvesh/data/themes/PsyPlay/assets/css/img/buttons/btn-overlay-pink.png)
+		}
+
 		.footer-tags a:hover {
 			color: #fb6dce
 		}
 
+		.pagination>.active>a,
+		.pagination>.active>a:focus,
+		.pagination>.active>a:hover,
+		.pagination>.active>span,
+		.pagination>.active>span:focus,
+		.pagination>.active>span:hover {
+			background: #e45cc0
+		}
+
 		@media screen and (max-width:991px) {
+			.movies-list-wrap .ml-title span {
+				background: 0 0
+			}
+
 			#menu .sub-container {
 				border: 0
 			}
@@ -3169,16 +3556,6 @@
 
 		.search-suggest ul {
 			border-top: 1px solid #e45cc0
-		}
-
-		a.comment-reply-link {
-			color: #fff;
-			background: #e45cc0
-		}
-
-		a.comment-reply-link:hover {
-			color: #fff;
-			background: #bf4ea1
 		}
 
 		.button {
@@ -3206,48 +3583,36 @@
 			box-shadow: 0 5px #666;
 			transform: translateY(4px)
 		}
-
-		.infopage .content img {
-			max-width: 100%;
-			height: auto
-		}
 	</style>
 	<meta property="og:type" content="website" />
     <meta property="og:image:width" content="800" />
     <meta property="og:image:height" content="420" />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image" content="https://darklord8750.github.io/movieshubbyuvesh/btn-overlay-red-yellow.png" />
-    <meta property="og:url" content="https://darklord8750.github.io/movieshubbyuvesh/" />
-    <meta property="og:title"
-        content="https://darklord8750.github.io/movieshubbyuvesh/ - Movies Hub By Uvesh PC and smartphone Movies of Bollywood Hollywood Hindi Cartoon Animation TV Shows Web Series at Movies Hub By Uvesh" />
-    <meta property="og:description" content="" />
-    <meta property="og:site_name" content="https://darklord8750.github.io/movieshubbyuvesh/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-    <meta name="theme-color" content="#1a1a1a" />
-    <link rel="shortcut icon" href="https://darklord8750.github.io/movieshubbyuvesh/btn-overlay-red-yellow.png"
-        type="image/x-icon" />
-    <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
-<meta name="description" content="Bollywood Movies" />
+	<meta property="og:url" content="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies" />
+	<meta property="og:title"
+		content="PC and smartphone Movies of Bollywood Hollywood Hindi Cartoon Animation TV Shows Web Series at Movies Hub By Uvesh" />
+		<meta property="og:type" content="website" />
+    <meta property="og:image:width" content="800" />
+    <meta property="og:image:height" content="420" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image" content="https://darklord8750.github.io/movieshubbyuvesh/btn-overlay-red-yellow.png" />
 
-<meta name="description"
-        content="Movies HuB By Uvesh PC and smartphone Movies of Bollywood Hollywood Hindi Cartoon Animation TV Shows Web Series at Movies HuB By Uvesh" />
-
-    <link rel="next" href="https://darklord8750.github.io/movieshubbyuvesh/page/2/" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="https://darklord8750.github.io/movieshubbyuvesh/" />
-    <meta property="og:description"
-        content="Movies HuB By Uvesh PC and smartphone Movies of Bollywood Hollywood Hindi Cartoon Animation TV Shows Web Series at Movies HuB By Uvesh" />
-    <meta property="og:url" content="https://darklord8750.github.io/movieshubbyuvesh/" />
-    <meta property="og:site_name" content="https://darklord8750.github.io/movieshubbyuvesh/" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <script type="application/ld+json"
+	<link rel="next" href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/page/2/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="All Bollywood Movies Archives" />
+	<meta property="og:description"
+		content="All Bollywood Movies 480p and 300Mb to 400Mb. Also, 720p, 1080p, 700Mb Download Movies" />
+	<meta property="og:url" content="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/" />
+	<meta property="og:site_name" content="Movies Hub By Uvesh" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<script type="application/ld+json"
         class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"CollectionPage","@id":"https://darklord8750.github.io/movieshubbyuvesh/","url":"https://darklord8750.github.io/movieshubbyuvesh/","name":"movieshubbyuvesh - PC and smartphone Movies of Bollywood Hollywood Hindi Cartoon Animation TV Shows Web Series at Movies Hub By Uvesh","isPartOf":{"@id":"https://darklord8750.github.io/movieshubbyuvesh/#website"},"about":{"@id":"https://darklord8750.github.io/movieshubbyuvesh/#organization"},"description":"PC and smartphone Movies of Bollywood Hollywood Hindi Cartoon Animation TV Shows Web Series at movieshubbyuvesh","breadcrumb":{"@id":"https://darklord8750.github.io/movieshubbyuvesh/#breadcrumb"},"inLanguage":"en-US"},{"@type":"BreadcrumbList","@id":"https://darklord8750.github.io/movieshubbyuvesh/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home"}]},{"@type":"WebSite","@id":"https://darklord8750.github.io/movieshubbyuvesh/#website","url":"https://darklord8750.github.io/movieshubbyuvesh/","name":"darklord8750.github.io/movieshubbyuvesh/","description":" PC and smartphone Movies of Bollywood Hollywood Hindi Cartoon Animation TV Shows Web Series at movieshubbyuvesh","publisher":{"@id":"https://darklord8750.github.io/movieshubbyuvesh/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://darklord8750.github.io/movieshubbyuvesh/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"Organization","@id":"https://darklord8750.github.io/movieshubbyuvesh/#organization","name":"Movies HuB By Uvesh","url":"https://darklord8750.github.io/movieshubbyuvesh/","logo":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://darklord8750.github.io/movieshubbyuvesh/#/schema/logo/image/","url":"https://darklord8750.github.io/movieshubbyuvesh/logo.png","contentUrl":"https://darklord8750.github.io/movieshubbyuvesh/logo.png","width":266,"height":72,"caption":"movieshubbyuvesh"},"image":{"@id":"https://darklord8750.github.io/movieshubbyuvesh/#/schema/logo/image/"}}]}</script>
-    <meta name="yandex-verification" content="fed63f3c419e111d" />
-
-    <style type='text/css'></style>
-    <style type='text/css'></style>
-    <style type='text/css'>
+    
+	<style type='text/css'></style>
+	<style type='text/css'></style>
+	<style type='text/css'>
 		.rll-youtube-player {
 			position: relative;
 			padding-bottom: 56.23%;
@@ -3298,42 +3663,49 @@
 			left: 0;
 			top: 0;
 			position: absolute;
-			background: url(https://mkvcinemas.foo/apps/wp-rocket/assets/img/youtube.png) no-repeat center;
+			background: url(https://darklord8750.github.io/movieshubbyuvesh/apps/wp-rocket/assets/img/youtube.png) no-repeat center;
 			background-color: transparent !important;
 			cursor: pointer;
 			border: none;
 		}
 	</style>
-	<script type="text/javascript" src="inc/js/jquery/jquery.min.js" id="jquery-core-js"></script>
-    <script type="text/javascript" src="inc/js/jquery/jquery-migrate.min.js" id="jquery-migrate-js"></script>
-    <script type="text/javascript" id="bbspoiler-js-extra">
-        /* <![CDATA[ */
-        var title = { "unfolded": "Expand", "folded": "Collapse" };
-        /* ]]> */
+	<script type="text/javascript" src="https://darklord8750.github.io/movieshubbyuvesh/inc/js/jquery/jquery.min.js"
+		id="jquery-core-js"></script>
+	<script type="text/javascript" src="https://darklord8750.github.io/movieshubbyuvesh/inc/js/jquery/jquery-migrate.min.js"
+		id="jquery-migrate-js"></script>
+	<script type="text/javascript" id="bbspoiler-js-extra">
+		/* <![CDATA[ */
+		var title = { "unfolded": "Expand", "folded": "Collapse" };
+		/* ]]> */
 	</script>
 	<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript"
-        src="data/cache/min/1/wp-content/plugins/bbspoiler/inc/bbspoiler.js?ver=1704610368" id="bbspoiler-js"
-        defer></script>
-    <script data-minify="1" type="text/javascript"
-        src="data/cache/min/1/ajax/libs/jquery/2.1.3/jquery.min.js?ver=1704610368" id="jquery-main-js"></script>
-
-    <script type="rocketlazyloadscript" data-rocket-type="text/javascript"
-        src="data/themes/PsyPlay/assets/js/theme.script.min.js" id="psy_front_ajax-js" defer></script>
-    
-	<link rel='shortlink' href='https://mkvcinemas.foo/?p=47' />
-	<link rel="icon" href="https://darklord8750.github.io/movieshubbyuvesh/btn-overlay-red-yellow.png" sizes="32x32" />
-    <link rel="icon" href="https://darklord8750.github.io/movieshubbyuvesh/btn-overlay-red-yellow.png"
-        sizes="192x192" />
-    <link rel="apple-touch-icon" href="https://darklord8750.github.io/movieshubbyuvesh/btn-overlay-red-yellow.png" />
-    <meta name="msapplication-TileImage"
-        content="https://darklord8750.github.io/movieshubbyuvesh/btn-overlay-red-yellow.png" />
-    <script>
+		src="https://darklord8750.github.io/movieshubbyuvesh/data/cache/min/1/wp-content/plugins/bbspoiler/inc/bbspoiler.js?ver=1704726775"
+		id="bbspoiler-js" defer></script>
+	<script data-minify="1" type="text/javascript"
+		src="https://darklord8750.github.io/movieshubbyuvesh/data/cache/min/1/ajax/libs/jquery/2.1.3/jquery.min.js?ver=1704726775"
+		id="jquery-main-js"></script>
+	<script type="text/javascript" id="psy_front_ajax-js-extra">
+		/* <![CDATA[ */
+		var psyAjax = { "url": "https:\/\/mkvcinemas.foo\/wp-admin\/admin-ajax.php", "like": "Favorite", "unlike": "Remove Favorite" };
+		/* ]]> */
+	</script>
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript"
+		src="https://darklord8750.github.io/movieshubbyuvesh/data/themes/PsyPlay/assets/js/theme.script.min.js" id="psy_front_ajax-js"
+		defer></script>
+	<style type='text/css'></style>
+	</style>
+	<link rel="icon" href="https://darklord8750.github.io/movieshubbyuvesh/media/2022/08/mkvfa.png" sizes="32x32" />
+	<link rel="icon" href="https://darklord8750.github.io/movieshubbyuvesh/media/2022/08/mkvfa.png" sizes="192x192" />
+	<link rel="apple-touch-icon" href="https://darklord8750.github.io/movieshubbyuvesh/media/2022/08/mkvfa.png" />
+	<meta name="msapplication-TileImage" content="https://darklord8750.github.io/movieshubbyuvesh/media/2022/08/mkvfa.png" />
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107213517-1"></script>
+	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag() { dataLayer.push(arguments); }
 		gtag('js', new Date());
 		gtag('config', 'UA-107213517-1');
 	</script>
-
+	
 </head>
 
 <body>
@@ -3360,9 +3732,9 @@
                             <ul class='sub-menu'>
                                 <li id="menu-item-85"
                                     class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-85"><a
-                                        title="All Bolywood Movies"
+                                        title="All Bollywood Movies"
                                         href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
-                                        data-wpel-link="internal">All Bolywood Movies</a></li>
+                                        data-wpel-link="internal">All Bollywood Movies</a></li>
                                 <li id="menu-item-116"
                                     class="menu-item menu-item-type-post_type menu-item-object-page menu-item-116"><a
                                         title="A to Z Bollywood Movies"
@@ -3631,10 +4003,11 @@
                             data-wpel-link="internal">Top IMDb</a></li>
                 </ul>
                 <div class="clearfix"></div>
-			</div>
-			<div id="top-user">
-				<div class="top-user-content guest">
-				</div>
+            </div>
+            <div id="top-user">
+                <div class="top-user-content guest">
+                </div>
+            </div>
             <div id="search">
                 <div class="search-content">
                     <form method="get" id="searchform" action="https://darklord8750.github.io/movieshubbyuvesh">
@@ -3642,91 +4015,2706 @@
                             value="" data-swplive="true">
                         <button type="submit"><i class="fa fa-search"></i></button>
                     </form>
-				</div>
-			</div>
-			<div class="clearfix"></div>
-		</div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
 	</header>
 	<div class="header-pad"></div>
-	<div id="main" class="page-detail page-profiles">
+	<div class="header-pad"></div>
+
+	<div id="main" class="page-category">
 		<div class="container">
 			<div class="pad"></div>
-			<div class="main-content main-detail">
+			<div class="main-content main-category">
 
 
-				<div class="infopage">
-					<div class="infopage-head">Bollywood Movies</div>
+				<div class="movies-list-wrap mlw-category">
+					<div class="ml-title ml-title-page">
+						<span>All Bollywood Movies</span>
+						<div class="clearfix"></div>
+					</div>
 
 
+					<div class="movies-list movies-list-full">
+						<div data-movie-id="47565" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/guthlee-ladoo-2023/" data-url="" class="ml-mask jt"
+								data-hasqtip="112" oldtitle="Guthlee ladoo 2023 Hindi Movie AMZN WebRip 480p 720p 1080p"
+								title="" data-wpel-link="internal">
 
-					<div class="content">
-						<p class="f-desc">All Bollywood Movies 480p and 300Mb to 400Mb. Also, 720p, 1080p, 700Mb
-							Download Movies.</p>
-						<p>Choose and Download A to Z, Year wise and More&#8230;</p>
-						<ul>
-							<li style="text-align: left;">
-								<h4><a title="All Bollywood Movies" href="/category/bollywood-movies/"
-										data-wpel-link="internal"> <b>All bollywood Movies</b></a></h4>
-							</li>
-						</ul>
-						<ul>
-							<li style="text-align: left;">
-								<h4><a href="/a-to-z-bollywood-movies/" title="A to Z Bollywood Movies"
-										data-wpel-link="internal"><b>A to Z Bollywood Movies</b></a></h4>
-							</li>
-						</ul>
-						<ul>
-							<li style="text-align: left;">
-								<h4><a href="/year-wise-bollywood-movies/" title="Year wise Bollywood Movies"
-										data-wpel-link="internal"><b>Year Wise Bollywood Movies</b></a></h4>
-							</li>
-						</ul>
-						<p>Find here all the Bollywood movies.<br />
-							Bollywood, the colloquial term for India's Hindi language film industry, holds a significant position in the global entertainment landscape. Nestled in the bustling city of Mumbai, Maharashtra, Hindi cinema, often referred to as Bollywood, has been a powerhouse of creativity and cultural expression. While the term "Bollywood" is sometimes used to represent the entirety of Indian cinema, it specifically pertains to Hindi-language productions. With a commanding 43% share of net box office revenue in 2014, Bollywood stands as one of the largest contributors to the Indian film industry, which also encompasses various regional cinemas. Beyond its economic prowess, Bollywood is renowned for its extensive reach, with over 3.5 billion tickets sold globally in 2011, surpassing Hollywood's figures. Employing a vast number of individuals and producing 252 films in 2014 alone, Bollywood's influence extends beyond borders, solidifying its place as one of the world's leading film industries. The journey of Bollywood spans decades, featuring iconic films like "Mughal-e-Azam" and "Sholay" in different eras, each contributing to the rich tapestry of Indian cinema.Bollywood's cinematic journey is a kaleidoscope of storytelling, cultural richness, and artistic evolution. In its Golden Era during the 1950s and 1960s, films like "Shree 420" and "Mughal-e-Azam" captured the imagination of audiences, setting the stage for the industry's growth. The 1970s and 1980s witnessed the emergence of iconic films like "Sholay," a paradigm of the masala film genre, and "Mr. India," a blend of science fiction and adventure. These decades marked a shift in storytelling techniques and the portrayal of complex characters, reflecting societal changes.
-
-As Bollywood ventured into the 21st century, it embraced diverse genres and themes. Films such as "Lagaan" (2001), which received an Academy Award nomination, showcased Bollywood's global aspirations. The industry continued to evolve, exploring unconventional narratives with movies like "Rang De Basanti" (2006) addressing socio-political issues and "Queen" (2013) challenging traditional gender roles.
-
-Moreover, the rise of influential filmmakers like Karan Johar, Sanjay Leela Bhansali, and Anurag Kashyap has brought fresh perspectives to the industry. Bollywood's global impact extends beyond the screen, with film festivals recognizing its artistic contributions. The vibrant musical culture, marked by timeless compositions and dance sequences, further enhances the industry's allure.
-
-In recent years, Bollywood has embraced technological advancements, experimenting with storytelling formats and reaching wider audiences through digital platforms. While facing challenges and criticisms, the industry continues to push boundaries, reflecting the diversity and dynamism of India. Bollywood's enduring legacy lies not just in its box office successes but in its ability to captivate hearts, tell compelling stories, and serve as a mirror to society's ever-changing reflections.
+								<span class="mli-quality">WebRip</span>
 
 
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Guthlee ladoo 2023 Hindi Movie AMZN WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/6fXh8g5YRPoCbYjqcSaKkorf03m.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/6fXh8g5YRPoCbYjqcSaKkorf03m.jpg"
+										class="mli-thumb"
+										alt="Guthlee ladoo 2023 Hindi Movie AMZN WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Guthlee ladoo 2023 Hindi Movie AMZN WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Guthlee ladoo 2023 Hindi Movie AMZN WebRip 480p 720p 1080p
+								</div>
+								<div class="jtip-quality">WebRip</div>
 
 
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
 
 
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2022/" rel="tag"
+											data-wpel-link="internal">2022</a></div>
 
-						</p>
-						<div class='code-block code-block-2' style='margin: 8px 0; clear: both;'>
-							<br /><br /><a href="https://darklord8750.github.io/movieshubbyuvesh/"
-								target="_blank" data-wpel-link="internal"><strong>
-									<center>
-										<font size="6" color="#ff6650">[ Movies Hub By Uvesh ]</font>
-									</center>
-								</strong></a>
+
+									<div class="jt-info">105 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>Guthlee, son of a poor sweeper, has a dream &#8211; to go to school. But the obstacle
+									is his caste. A headmaster is sympathetic to him but powerless against caste&#8230;
+								</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/guthlee-ladoo-2023/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
 						</div>
+						<div data-movie-id="48105" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/tiger-3-2023/" data-url="" class="ml-mask jt"
+								data-hasqtip="112"
+								oldtitle="Tiger 3 &#8211; 2023 Hindi Movie AMZN WebRip 480p 720p 1080p 2160p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb"
+									alt="Tiger 3 &#8211; 2023 Hindi Movie AMZN WebRip 480p 720p 1080p 2160p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/7wgED7Yx9VLcNWSO91VgwicHmMD.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/7wgED7Yx9VLcNWSO91VgwicHmMD.jpg"
+										class="mli-thumb"
+										alt="Tiger 3 &#8211; 2023 Hindi Movie AMZN WebRip 480p 720p 1080p 2160p"></noscript>
+								<span class="mli-info">
+									<h2>Tiger 3 &#8211; 2023 Hindi Movie AMZN WebRip 480p 720p 1080p 2160p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Tiger 3 &#8211; 2023 Hindi Movie AMZN WebRip 480p 720p
+									1080p 2160p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2023/" rel="tag"
+											data-wpel-link="internal">2023</a></div>
+
+
+									<div class="jt-info">153 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>Following the events of Tiger Zinda Hai, War, and Pathaan, Avinash Singh Rathore
+									returns as Tiger but this time the battle is within. He has to choose between his
+									country&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/action/"
+										rel="category tag" data-wpel-link="internal">Action</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/adventure/" rel="category tag"
+										data-wpel-link="internal">Adventure</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/" rel="category tag"
+										data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/thriller/" rel="category tag"
+										data-wpel-link="internal">Thriller</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/tiger-3-2023/" class="btn btn-block btn-successful"
+										data-wpel-link="internal"><i class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48903" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/prem-1995-hindi-movie-zee5-webrip-480p-720p-1080p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Prem 1995 Hindi Movie Zee5 WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Prem 1995 Hindi Movie Zee5 WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/6RobB1fPYk9VFbnfwJCMxL6LLr4.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/6RobB1fPYk9VFbnfwJCMxL6LLr4.jpg"
+										class="mli-thumb"
+										alt="Prem 1995 Hindi Movie Zee5 WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Prem 1995 Hindi Movie Zee5 WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Prem 1995 Hindi Movie Zee5 WebRip 480p 720p 1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: 4.1</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/1995/" rel="tag"
+											data-wpel-link="internal">1995</a></div>
+
+
+									<div class="jt-info">167 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>Sanjay Verma has been having hallucinations of a past life as Shantanu. He meets
+									Sonia Verma, and recognizes her as the girl named Lachi in his past life. He
+									attempts&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/bangladesh/"
+										rel="tag" data-wpel-link="internal">Bangladesh</a>,&nbsp;<a
+										href="https://darklord8750.github.io/movieshubbyuvesh/country/india/" rel="tag"
+										data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-old-movies-below-2000/"
+										rel="category tag" data-wpel-link="internal">Bollywood Old Movies Below 2000</a>
+								</div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/prem-1995-hindi-movie-zee5-webrip-480p-720p-1080p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48900" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/naughty-40-2011-hindi-movie-amzn-webrip-480p-720p-1080p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Naughty @ 40 &#8211; 2011 Hindi Movie AMZN WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb"
+									alt="Naughty @ 40 &#8211; 2011 Hindi Movie AMZN WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/mwKGjpYXFUfIjwCJE1Ranpxnu8f.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/mwKGjpYXFUfIjwCJE1Ranpxnu8f.jpg"
+										class="mli-thumb"
+										alt="Naughty @ 40 &#8211; 2011 Hindi Movie AMZN WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Naughty @ 40 &#8211; 2011 Hindi Movie AMZN WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Naughty @ 40 &#8211; 2011 Hindi Movie AMZN WebRip 480p
+									720p 1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: 2.7</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2011/" rel="tag"
+											data-wpel-link="internal">2011</a></div>
+
+
+									<div class="jt-info">108 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>Laxminarayan Kapoor lives a wealthy lifestyle in London along with his religious
+									wife, Maya; son Ravinder; and two nephews, Sandeep and Randeep. While the nephews
+									have adapted themselves to the&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2011-12/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2011-12</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/comedy/" rel="category tag"
+										data-wpel-link="internal">Comedy</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/naughty-40-2011-hindi-movie-amzn-webrip-480p-720p-1080p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="47788" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/tejas-2023/" data-url="" class="ml-mask jt"
+								data-hasqtip="112" oldtitle="Tejas 2023 Hindi Movie Zee5 WebRip 480p 720p 1080p 2160p"
+								title="" data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Tejas 2023 Hindi Movie Zee5 WebRip 480p 720p 1080p 2160p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/2ylKeJmF1ZHJ5FE3CwL7TMIFJ1j.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/2ylKeJmF1ZHJ5FE3CwL7TMIFJ1j.jpg"
+										class="mli-thumb"
+										alt="Tejas 2023 Hindi Movie Zee5 WebRip 480p 720p 1080p 2160p"></noscript>
+								<span class="mli-info">
+									<h2>Tejas 2023 Hindi Movie Zee5 WebRip 480p 720p 1080p 2160p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Tejas 2023 Hindi Movie Zee5 WebRip 480p 720p 1080p 2160p
+								</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2023/" rel="tag"
+											data-wpel-link="internal">2023</a></div>
+
+
+									<div class="jt-info">118 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>Story of the courageous female IAF officer Tejas Gill, who’s determined to safeguard
+									the nation at all costs. &nbsp; &nbsp; Tejas 2023 Full Movie Download in 480p, 720p,
+									1080p &#038;&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/tejas-2023/" class="btn btn-block btn-successful"
+										data-wpel-link="internal"><i class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="26174" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/salaakhen-1998-hindi-movie-jc-webrip-400mb-480p-1-4gb-720p-4gb-10gb-1080p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Salaakhen 1998 Hindi Movie AMZN WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Salaakhen 1998 Hindi Movie AMZN WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/kKWy6AenNX0aPdzqjkl2sIW4cMY.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/kKWy6AenNX0aPdzqjkl2sIW4cMY.jpg"
+										class="mli-thumb"
+										alt="Salaakhen 1998 Hindi Movie AMZN WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Salaakhen 1998 Hindi Movie AMZN WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Salaakhen 1998 Hindi Movie AMZN WebRip 480p 720p 1080p
+								</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: 5.4</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/1998/" rel="tag"
+											data-wpel-link="internal">1998</a></div>
+
+
+									<div class="jt-info">165 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>When an honest school teacher testifies in a rape case against a prominent
+									businessman&#8217;s son, he is psychologically tortured and forced to commit
+									suicide. His young son then takes the&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/action/"
+										rel="category tag" data-wpel-link="internal">Action</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/" rel="category tag"
+										data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-old-movies-below-2000/"
+										rel="category tag" data-wpel-link="internal">Bollywood Old Movies Below
+										2000</a>, <a href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/salaakhen-1998-hindi-movie-jc-webrip-400mb-480p-1-4gb-720p-4gb-10gb-1080p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="33112" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/waah-tera-kya-kehna-2002-hindi-movie-hs-webrip-300mb-480p-1gb-720p-3gb-1080p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Waah Tera Kya Kehna 2002 Hindi Movie AMZN WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb"
+									alt="Waah Tera Kya Kehna 2002 Hindi Movie AMZN WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/GHC59GC4iiEMF28VTsTugPVNaw.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/GHC59GC4iiEMF28VTsTugPVNaw.jpg"
+										class="mli-thumb"
+										alt="Waah Tera Kya Kehna 2002 Hindi Movie AMZN WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Waah Tera Kya Kehna 2002 Hindi Movie AMZN WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Waah Tera Kya Kehna 2002 Hindi Movie AMZN WebRip 480p 720p
+									1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: 3.7</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2002/" rel="tag"
+											data-wpel-link="internal">2002</a></div>
+
+
+									<div class="jt-info">100 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>Kishan Oberoi has three sons &#8211; Dilip, Ashish, and Raj. While Dilip and Ashish
+									are married, Raj (Govinda) is in love with Meena. Kishan does not trust his two
+									elder&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2000-10/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2000-10</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/comedy/" rel="category tag"
+										data-wpel-link="internal">Comedy</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/waah-tera-kya-kehna-2002-hindi-movie-hs-webrip-300mb-480p-1gb-720p-3gb-1080p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="32134" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/happy-hardy-and-heer-2020-hindi-movie-zee5-webrip-300mb-480p-1gb-720p-3gb-1080p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Happy Hardy And Heer 2020 Hindi Movie AMZN WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb"
+									alt="Happy Hardy And Heer 2020 Hindi Movie AMZN WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/rtnetNVIRV5ZuqmfJBrihCuvhvJ.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/rtnetNVIRV5ZuqmfJBrihCuvhvJ.jpg"
+										class="mli-thumb"
+										alt="Happy Hardy And Heer 2020 Hindi Movie AMZN WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Happy Hardy And Heer 2020 Hindi Movie AMZN WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Happy Hardy And Heer 2020 Hindi Movie AMZN WebRip 480p
+									720p 1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: 5.9</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2020/" rel="tag"
+											data-wpel-link="internal">2020</a></div>
+
+
+									<div class="jt-info">123 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>Happy and Heer grow up as best friends, with Happy falling for Heer over the years.
+									When she moves to London, Happy goes with her on the pretext of getting&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2020/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2020</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/comedy/" rel="category tag"
+										data-wpel-link="internal">Comedy</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/romance/" rel="category tag"
+										data-wpel-link="internal">Romance</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/happy-hardy-and-heer-2020-hindi-movie-zee5-webrip-300mb-480p-1gb-720p-3gb-1080p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="8985" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/lashtam-pashtam-2018-hindi-movie-brrip-300mb-480p-1gb-720p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Lashtam Pashtam 2018 Hindi Movie AMZN WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Lashtam Pashtam 2018 Hindi Movie AMZN WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/rm7fCcHYKZ9EFfasBy5ggFG5Zel.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/rm7fCcHYKZ9EFfasBy5ggFG5Zel.jpg"
+										class="mli-thumb"
+										alt="Lashtam Pashtam 2018 Hindi Movie AMZN WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Lashtam Pashtam 2018 Hindi Movie AMZN WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Lashtam Pashtam 2018 Hindi Movie AMZN WebRip 480p 720p
+									1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: 6.3</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2018/" rel="tag"
+											data-wpel-link="internal">2018</a></div>
+
+
+									<div class="jt-info">108 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>Set in Dubai, the story explores the bond between two friends, an Indian and a
+									Pakistani, who play as the doubles partners in Tennis. &nbsp; &nbsp; Lashtam Pashtam
+									2018 Full&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2018/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2018</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/lashtam-pashtam-2018-hindi-movie-brrip-300mb-480p-1gb-720p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="16963" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/chousar-firangi-2019-hindi-movie-webrip-250mb-480p-800mb-720p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Chousar Firangi 2019 Hindi Movie AMZN WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Chousar Firangi 2019 Hindi Movie AMZN WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/cXbXqm3BaRQBb8C2DLZwu9oeJRB.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/cXbXqm3BaRQBb8C2DLZwu9oeJRB.jpg"
+										class="mli-thumb"
+										alt="Chousar Firangi 2019 Hindi Movie AMZN WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Chousar Firangi 2019 Hindi Movie AMZN WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Chousar Firangi 2019 Hindi Movie AMZN WebRip 480p 720p
+									1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: 7.1</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2019/" rel="tag"
+											data-wpel-link="internal">2019</a></div>
+
+
+									<div class="jt-info">95 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>Youngsters from humble backgrounds get unwittingly dragged into the dirty world of
+									politicians and gangsters, and must now devise a plan to escape from this dirty game
+									in the course&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2019/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2019</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/chousar-firangi-2019-hindi-movie-webrip-250mb-480p-800mb-720p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="12289" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/zindagi-1964-hindi-movie-webrip-400mb-480p-1-3gb-720p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Zindagi 1964 Hindi Movie AMZN WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Zindagi 1964 Hindi Movie AMZN WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/2EfRcRib7VgQf3hR2K9CdQn1Vfs.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/2EfRcRib7VgQf3hR2K9CdQn1Vfs.jpg"
+										class="mli-thumb"
+										alt="Zindagi 1964 Hindi Movie AMZN WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Zindagi 1964 Hindi Movie AMZN WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Zindagi 1964 Hindi Movie AMZN WebRip 480p 720p 1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: 6.5</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/1964/" rel="tag"
+											data-wpel-link="internal">1964</a></div>
+
+
+									<div class="jt-info">157 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>Beena falls in love with Rajan after he rescues her from some goons. Soon they marry
+									and she is pregnant. The trouble starts when Beena spends the night with
+									Gopal&#8230;.</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-old-movies-below-2000/"
+										rel="category tag" data-wpel-link="internal">Bollywood Old Movies Below
+										2000</a>, <a href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/zindagi-1964-hindi-movie-webrip-400mb-480p-1-3gb-720p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="11247" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/ishqeria-2018-hindi-movie-webrip-300mb-480p-1gb-720p-mkv-fu/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Ishqeria 2018 Hindi Movie AMZN WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Ishqeria 2018 Hindi Movie AMZN WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/iNnhAjWziAm0JwYJQWjpA50Rl7E.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/iNnhAjWziAm0JwYJQWjpA50Rl7E.jpg"
+										class="mli-thumb"
+										alt="Ishqeria 2018 Hindi Movie AMZN WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Ishqeria 2018 Hindi Movie AMZN WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Ishqeria 2018 Hindi Movie AMZN WebRip 480p 720p 1080p
+								</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: 4.1</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2018/" rel="tag"
+											data-wpel-link="internal">2018</a></div>
+
+
+									<div class="jt-info">118 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>Ishqeria is a story of a small town girl who falls madly in love with the most sought
+									after guy in college. It is a journey of first love, growing&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2018/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2018</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/comedy/" rel="category tag"
+										data-wpel-link="internal">Comedy</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/romance/" rel="category tag"
+										data-wpel-link="internal">Romance</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/ishqeria-2018-hindi-movie-webrip-300mb-480p-1gb-720p-mkv-fu/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48775" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/once-upon-two-times-2023-hindi-movie-zee5-webrip-480p-720p-1080p-2160p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Once Upon Two Times 2023 Hindi Movie Zee5 WebRip 480p 720p 1080p 2160p"
+								title="" data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb"
+									alt="Once Upon Two Times 2023 Hindi Movie Zee5 WebRip 480p 720p 1080p 2160p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/mHFKRUlJXHH3FkWysADxYIxMJU8.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/mHFKRUlJXHH3FkWysADxYIxMJU8.jpg"
+										class="mli-thumb"
+										alt="Once Upon Two Times 2023 Hindi Movie Zee5 WebRip 480p 720p 1080p 2160p"></noscript>
+								<span class="mli-info">
+									<h2>Once Upon Two Times 2023 Hindi Movie Zee5 WebRip 480p 720p 1080p 2160p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Once Upon Two Times 2023 Hindi Movie Zee5 WebRip 480p 720p
+									1080p 2160p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2023/" rel="tag"
+											data-wpel-link="internal">2023</a></div>
+
+
+									<div class="jt-info">106 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>On a family trip gone wrong, betrothed sweethearts Ahaan and Ruhi find out that their
+									parents were once embittered lovers and attempt to mend their past, only to confront
+									the&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/once-upon-two-times-2023-hindi-movie-zee5-webrip-480p-720p-1080p-2160p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48028" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/shastry-virudh-shastry-2023/" data-url="" class="ml-mask jt"
+								data-hasqtip="112"
+								oldtitle="Shastry Virudh Shastry 2023 Hindi Movie NF WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb"
+									alt="Shastry Virudh Shastry 2023 Hindi Movie NF WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/ivHy8dom1IZhs4PsyLTBl5pRF2u.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/ivHy8dom1IZhs4PsyLTBl5pRF2u.jpg"
+										class="mli-thumb"
+										alt="Shastry Virudh Shastry 2023 Hindi Movie NF WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Shastry Virudh Shastry 2023 Hindi Movie NF WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Shastry Virudh Shastry 2023 Hindi Movie NF WebRip 480p
+									720p 1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2023/" rel="tag"
+											data-wpel-link="internal">2023</a></div>
+
+
+									<div class="jt-info">140 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>A little boy is in a dilemma when his parents wish to take him away from his orthodox
+									grandparents. This gives rise to a legal battle between the two for&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/family/" rel="category tag"
+										data-wpel-link="internal">Family</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/shastry-virudh-shastry-2023/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="47982" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/three-of-us-2023/" data-url="" class="ml-mask jt"
+								data-hasqtip="112" oldtitle="Three of Us 2023 Hindi Movie NF WebRip 480p 720p 1080p"
+								title="" data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Three of Us 2023 Hindi Movie NF WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/ti1oOivEI4cPcrDvXjjKDgzEa19.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/ti1oOivEI4cPcrDvXjjKDgzEa19.jpg"
+										class="mli-thumb"
+										alt="Three of Us 2023 Hindi Movie NF WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Three of Us 2023 Hindi Movie NF WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Three of Us 2023 Hindi Movie NF WebRip 480p 720p 1080p
+								</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2023/" rel="tag"
+											data-wpel-link="internal">2023</a></div>
+
+
+									<div class="jt-info">99 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>While grappling with early symptoms of dementia, Shailaja finds herself at the cusp
+									of her past, present, and future. She decides to go on a trip to revisit her
+									childhood&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/three-of-us-2023/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48765" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/safed-2023-hindi-movie-zee5-webrip-480p-720p-1080p-2160p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Safed 2023 Hindi Movie Zee5 WebRip 480p 720p 1080p 2160p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Safed 2023 Hindi Movie Zee5 WebRip 480p 720p 1080p 2160p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/9HqvelCldr8rIGfFkyNMg4MHWYk.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/9HqvelCldr8rIGfFkyNMg4MHWYk.jpg"
+										class="mli-thumb"
+										alt="Safed 2023 Hindi Movie Zee5 WebRip 480p 720p 1080p 2160p"></noscript>
+								<span class="mli-info">
+									<h2>Safed 2023 Hindi Movie Zee5 WebRip 480p 720p 1080p 2160p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Safed 2023 Hindi Movie Zee5 WebRip 480p 720p 1080p 2160p
+								</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2023/" rel="tag"
+											data-wpel-link="internal">2023</a></div>
+
+
+									<div class="jt-info">69 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>The film was shot in world&#8217;s oldest city, Benaras, in just 11 days with the
+									minimal crew of 35 people. &nbsp; &nbsp; Safed 2023 Full Movie Download in 480p,
+									720p,&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/romance/" rel="category tag"
+										data-wpel-link="internal">Romance</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/safed-2023-hindi-movie-zee5-webrip-480p-720p-1080p-2160p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="47426" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/dono-2023/" data-url="" class="ml-mask jt"
+								data-hasqtip="112" oldtitle="Dono 2023 Hindi Movie Zee5 WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Dono 2023 Hindi Movie Zee5 WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/ewDBUMMrCSwm5r4pTCaYlIkIuXM.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/ewDBUMMrCSwm5r4pTCaYlIkIuXM.jpg"
+										class="mli-thumb"
+										alt="Dono 2023 Hindi Movie Zee5 WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Dono 2023 Hindi Movie Zee5 WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Dono 2023 Hindi Movie Zee5 WebRip 480p 720p 1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2023/" rel="tag"
+											data-wpel-link="internal">2023</a></div>
+
+
+									<div class="jt-info">N/A</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>The film explores modern relationships and is set against the backdrop of a lavish
+									destination wedding. &nbsp; &nbsp; Dono 2023 Full Movie Download in 480p, 720p
+									&#038; 1080p MKV: &nbsp;&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/romance/" rel="category tag"
+										data-wpel-link="internal">Romance</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/dono-2023/" class="btn btn-block btn-successful"
+										data-wpel-link="internal"><i class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="47791" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/12th-fail-2023/" data-url="" class="ml-mask jt"
+								data-hasqtip="112"
+								oldtitle="12th Fail 2023 Hindi Movie DSNP WebRip 480p 720p 1080p 2160p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="12th Fail 2023 Hindi Movie DSNP WebRip 480p 720p 1080p 2160p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/nycxyjP0BDoXC7upX38b9MugIyf.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/nycxyjP0BDoXC7upX38b9MugIyf.jpg"
+										class="mli-thumb"
+										alt="12th Fail 2023 Hindi Movie DSNP WebRip 480p 720p 1080p 2160p"></noscript>
+								<span class="mli-info">
+									<h2>12th Fail 2023 Hindi Movie DSNP WebRip 480p 720p 1080p 2160p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">12th Fail 2023 Hindi Movie DSNP WebRip 480p 720p 1080p
+									2160p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2023/" rel="tag"
+											data-wpel-link="internal">2023</a></div>
+
+
+									<div class="jt-info">147 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>Inspired by millions of UPSC students&#8217; lives and struggles, the story follows
+									Manoj, who fails his 12th grade. But how he restarts his journey towards his dream
+									of serving the&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/12th-fail-2023/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48750" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/welcome-2-karachi-2015-hindi-movie-amzn-webrip-480p-720p-1080p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Welcome 2 Karachi 2015 Hindi Movie AMZN WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb"
+									alt="Welcome 2 Karachi 2015 Hindi Movie AMZN WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/5k9J53bv3MtJlUti4vVUedK5PMd.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/5k9J53bv3MtJlUti4vVUedK5PMd.jpg"
+										class="mli-thumb"
+										alt="Welcome 2 Karachi 2015 Hindi Movie AMZN WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Welcome 2 Karachi 2015 Hindi Movie AMZN WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Welcome 2 Karachi 2015 Hindi Movie AMZN WebRip 480p 720p
+									1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: 4.2</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2015/" rel="tag"
+											data-wpel-link="internal">2015</a></div>
+
+
+									<div class="jt-info">131 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>On a drunk night, Shammi suggests that he and Kedar leave for America on a cruise,
+									even though they laugh it off in that instance, in a freak accident by&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a>,&nbsp;<a
+										href="https://darklord8750.github.io/movieshubbyuvesh/country/united-kingdom/" rel="tag"
+										data-wpel-link="internal">United Kingdom</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2015/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2015</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/comedy/" rel="category tag"
+										data-wpel-link="internal">Comedy</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/welcome-2-karachi-2015-hindi-movie-amzn-webrip-480p-720p-1080p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48748" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/tridev-1989-hindi-movie-amzn-webrip-480p-720p-1080p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Tridev 1989 Hindi Movie AMZN WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Tridev 1989 Hindi Movie AMZN WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/fWg3vBcpKyea5aA7gyaHn0LbHOi.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/fWg3vBcpKyea5aA7gyaHn0LbHOi.jpg"
+										class="mli-thumb"
+										alt="Tridev 1989 Hindi Movie AMZN WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Tridev 1989 Hindi Movie AMZN WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Tridev 1989 Hindi Movie AMZN WebRip 480p 720p 1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: 6.5</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/1989/" rel="tag"
+											data-wpel-link="internal">1989</a></div>
+
+
+									<div class="jt-info">173 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>A honest but disgraced Police Inspector&#8217;s attempts to clear his name pits him
+									against terrorists and the brother of his sweetheart. &nbsp; &nbsp; Tridev 1989 Full
+									Movie Download in 480p,&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/action/"
+										rel="category tag" data-wpel-link="internal">Action</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/" rel="category tag"
+										data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-old-movies-below-2000/"
+										rel="category tag" data-wpel-link="internal">Bollywood Old Movies Below
+										2000</a>, <a href="https://darklord8750.github.io/movieshubbyuvesh/category/crime/" rel="category tag"
+										data-wpel-link="internal">Crime</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/tridev-1989-hindi-movie-amzn-webrip-480p-720p-1080p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="22381" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/indian-2001-hindi-movie-jc-webrip-400mb-480p-1-4gb-720p-4gb-10gb-1080p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Indian 2001 Hindi Movie AMZN WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Indian 2001 Hindi Movie AMZN WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/vqfJESTMVjp7GwPJz0SvASSdRr9.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/vqfJESTMVjp7GwPJz0SvASSdRr9.jpg"
+										class="mli-thumb"
+										alt="Indian 2001 Hindi Movie AMZN WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Indian 2001 Hindi Movie AMZN WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Indian 2001 Hindi Movie AMZN WebRip 480p 720p 1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: 5.4</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2001/" rel="tag"
+											data-wpel-link="internal">2001</a></div>
+
+
+									<div class="jt-info">178 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>DCP Raksekhar Azad (Raj) is an invincible cop with a great aim. He arrests a
+									terrorist by the name of Khan. But Khan lands in a prison cell that looks&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/action/"
+										rel="category tag" data-wpel-link="internal">Action</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/" rel="category tag"
+										data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2000-10/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2000-10</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/crime/" rel="category tag"
+										data-wpel-link="internal">Crime</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/indian-2001-hindi-movie-jc-webrip-400mb-480p-1-4gb-720p-4gb-10gb-1080p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48743" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/ittu-si-baat-2022-hindi-movie-amzn-webrip-480p-720p-1080p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Ittu Si Baat 2022 Hindi Movie AMZN WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Ittu Si Baat 2022 Hindi Movie AMZN WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/bfOrmBG8E0hg7j1i4o6Wd5VZS35.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/bfOrmBG8E0hg7j1i4o6Wd5VZS35.jpg"
+										class="mli-thumb"
+										alt="Ittu Si Baat 2022 Hindi Movie AMZN WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Ittu Si Baat 2022 Hindi Movie AMZN WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Ittu Si Baat 2022 Hindi Movie AMZN WebRip 480p 720p 1080p
+								</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: 7.7</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2022/" rel="tag"
+											data-wpel-link="internal">2022</a></div>
+
+
+									<div class="jt-info">110 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>Ittu Si Baat is an upcoming Indian Hindi-language romantic-comedy film. The film is
+									set in the small town of Chunar, near Varanasi. Ittu Si Baat is a slice-of-life
+									story of&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/ittu-si-baat-2022-hindi-movie-amzn-webrip-480p-720p-1080p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48740" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/kho-gaye-hum-kahan-2023-hindi-movie-nf-webrip-480p-720p-1080p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Kho Gaye Hum Kahan 2023 Hindi Movie NF WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb"
+									alt="Kho Gaye Hum Kahan 2023 Hindi Movie NF WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/WUptEusy1sMh3s46Ik7QbfoKts.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/WUptEusy1sMh3s46Ik7QbfoKts.jpg"
+										class="mli-thumb"
+										alt="Kho Gaye Hum Kahan 2023 Hindi Movie NF WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Kho Gaye Hum Kahan 2023 Hindi Movie NF WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Kho Gaye Hum Kahan 2023 Hindi Movie NF WebRip 480p 720p
+									1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2023/" rel="tag"
+											data-wpel-link="internal">2023</a></div>
+
+
+									<div class="jt-info">135 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>Three best friends juggle life as 20-somethings in Mumbai, where romance, ambition
+									and heartbreak collide with the addictive draw of social media. &nbsp; &nbsp; Kho
+									Gaye Hum Kahan 2023 Full&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/kho-gaye-hum-kahan-2023-hindi-movie-nf-webrip-480p-720p-1080p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="13403" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/hamid-2019-hindi-movie-webrip-300mb-480p-900mb-720p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Hamid 2018 Hindi Movie NF WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Hamid 2018 Hindi Movie NF WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/35QHuEC4cUP1R7O0XtPIfRPF4mz.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/35QHuEC4cUP1R7O0XtPIfRPF4mz.jpg"
+										class="mli-thumb"
+										alt="Hamid 2018 Hindi Movie NF WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Hamid 2018 Hindi Movie NF WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Hamid 2018 Hindi Movie NF WebRip 480p 720p 1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: 7.7</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2018/" rel="tag"
+											data-wpel-link="internal">2018</a></div>
+
+
+									<div class="jt-info">108 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>Eight year-old Hamid learns that 786 is God&#8217;s number and decides to try and
+									reach out to God, by dialing this number. He wants to talk to his father, who&#8230;
+								</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2019/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2019</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/hamid-2019-hindi-movie-webrip-300mb-480p-900mb-720p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48689" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/salaar-2023/" data-url="" class="ml-mask jt"
+								data-hasqtip="112" oldtitle="Salaar 2023 Hindi Movie HDTC 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">HDTC</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Salaar 2023 Hindi Movie HDTC 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/vzzeYSh6QYyN9CcY0EmdZJvXH4l.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/vzzeYSh6QYyN9CcY0EmdZJvXH4l.jpg"
+										class="mli-thumb" alt="Salaar 2023 Hindi Movie HDTC 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Salaar 2023 Hindi Movie HDTC 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Salaar 2023 Hindi Movie HDTC 480p 720p 1080p</div>
+								<div class="jtip-quality">HDTC</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2023/" rel="tag"
+											data-wpel-link="internal">2023</a></div>
+
+
+									<div class="jt-info">170 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>In the city of Khansaar, Raja Mannar plans to make his son, Vardharaja Mannar his
+									successor, but Raja Mannar&#8217;s ministers and advisors plan a coup d&#8217;état
+									by hiring armies from&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/action/"
+										rel="category tag" data-wpel-link="internal">Action</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/" rel="category tag"
+										data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/crime/" rel="category tag"
+										data-wpel-link="internal">Crime</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/south-indian-hindi-dubbed-movies/"
+										rel="category tag" data-wpel-link="internal">South Indian Hindi Dubbed
+										Movies</a>, <a href="https://darklord8750.github.io/movieshubbyuvesh/category/thriller/"
+										rel="category tag" data-wpel-link="internal">Thriller</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/salaar-2023/" class="btn btn-block btn-successful"
+										data-wpel-link="internal"><i class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="47794" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/sajini-shinde-ka-viral-video-2023/" data-url=""
+								class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Sajini Shinde Ka Viral Video 2023 Hindi Movie NF WebRip 480p 720p 1080p"
+								title="" data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb"
+									alt="Sajini Shinde Ka Viral Video 2023 Hindi Movie NF WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/9OcjqPddhJZ2CTeZR7KNar9vcMP.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/9OcjqPddhJZ2CTeZR7KNar9vcMP.jpg"
+										class="mli-thumb"
+										alt="Sajini Shinde Ka Viral Video 2023 Hindi Movie NF WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Sajini Shinde Ka Viral Video 2023 Hindi Movie NF WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Sajini Shinde Ka Viral Video 2023 Hindi Movie NF WebRip
+									480p 720p 1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2023/" rel="tag"
+											data-wpel-link="internal">2023</a></div>
+
+
+									<div class="jt-info">114 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>A missing school teacher, Sajini Shinde, is presumed dead after she jumped off a
+									bridge into a river in an alleged suicide attempt. The trigger is a leaked video
+									of&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/n-a/" rel="tag"
+										data-wpel-link="internal">N/A</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/sajini-shinde-ka-viral-video-2023/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48682" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/daayre-2023-hindi-movie-sm-webrip-480p-720p-1080p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Daayre 2023 Hindi Movie SM WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Daayre 2023 Hindi Movie SM WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/Vu2FL34N0ZxWoYqkLhUR9O1KTx.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/Vu2FL34N0ZxWoYqkLhUR9O1KTx.jpg"
+										class="mli-thumb"
+										alt="Daayre 2023 Hindi Movie SM WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Daayre 2023 Hindi Movie SM WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Daayre 2023 Hindi Movie SM WebRip 480p 720p 1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2023/" rel="tag"
+											data-wpel-link="internal">2023</a></div>
+
+
+									<div class="jt-info">79 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>A tale of sisterly love between Dimple and Pari where they both are willing to go to
+									great lengths for each other in their own way&#8230; &nbsp; &nbsp; Daayre
+									2023&#8230;</p>
+								</p>
+
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/daayre-2023-hindi-movie-sm-webrip-480p-720p-1080p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48678" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/dry-day-2023-hindi-movie-amzn-webrip-480p-720p-1080p-2160p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Dry Day 2023 Hindi Movie AMZN WebRip 480p 720p 1080p 2160p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Dry Day 2023 Hindi Movie AMZN WebRip 480p 720p 1080p 2160p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/nR2RUMJICY8l9C5iBWfwoUl2Oz1.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/nR2RUMJICY8l9C5iBWfwoUl2Oz1.jpg"
+										class="mli-thumb"
+										alt="Dry Day 2023 Hindi Movie AMZN WebRip 480p 720p 1080p 2160p"></noscript>
+								<span class="mli-info">
+									<h2>Dry Day 2023 Hindi Movie AMZN WebRip 480p 720p 1080p 2160p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Dry Day 2023 Hindi Movie AMZN WebRip 480p 720p 1080p 2160p
+								</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2023/" rel="tag"
+											data-wpel-link="internal">2023</a></div>
+
+
+									<div class="jt-info">128 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>When his wife makes a vow to abort their baby due to his alcoholism, Gannu, the
+									biggest loafer of Jagodhar sets out on a protest to ban alcohol in his&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/comedy/" rel="category tag"
+										data-wpel-link="internal">Comedy</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/dry-day-2023-hindi-movie-amzn-webrip-480p-720p-1080p-2160p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48668" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/dunki-2023/" data-url="" class="ml-mask jt"
+								data-hasqtip="112" oldtitle="Dunki 2023 Hindi Movie HDTS 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">PreDvd</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Dunki 2023 Hindi Movie HDTS 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/kPRb1mbVHGop0egQ7153y0lhzGL.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/kPRb1mbVHGop0egQ7153y0lhzGL.jpg"
+										class="mli-thumb" alt="Dunki 2023 Hindi Movie HDTS 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Dunki 2023 Hindi Movie HDTS 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Dunki 2023 Hindi Movie HDTS 480p 720p 1080p</div>
+								<div class="jtip-quality">PreDvd</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2023/" rel="tag"
+											data-wpel-link="internal">2023</a></div>
+
+
+									<div class="jt-info">160 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>Four friends from a sleepy little village in Punjab share a common dream: to go to
+									England. Their problem is that they have neither the visa nor the ticket. A&#8230;
+								</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/comedy/" rel="category tag"
+										data-wpel-link="internal">Comedy</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/dunki-2023/" class="btn btn-block btn-successful"
+										data-wpel-link="internal"><i class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48642" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/sitram-2022-hindi-movie-mx-webrip-480p-720p-1080p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Sitram 2022 Hindi Movie MX WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Sitram 2022 Hindi Movie MX WebRip 480p 720p 1080p"
+									data-lazy-src="https://i.imgur.com/FMNwnrOm.jpg"><noscript><img
+										src="https://i.imgur.com/FMNwnrOm.jpg" class="mli-thumb"
+										alt="Sitram 2022 Hindi Movie MX WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Sitram 2022 Hindi Movie MX WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Sitram 2022 Hindi Movie MX WebRip 480p 720p 1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2022/" rel="tag"
+											data-wpel-link="internal">2022</a></div>
+
+
+									<div class="jt-info">105 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>Two graduates make a film to change India&#8217;s education system. Due to a lack of
+									funds, they were only able to complete 80% of the film &#8212; how the system&#8230;
+								</p>
+								</p>
+
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2022/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2022</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/sitram-2022-hindi-movie-mx-webrip-480p-720p-1080p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48636" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/mithya-2008-hindi-movie-amzn-webrip-480p-720p-1080p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Mithya 2008 Hindi Movie AMZN WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Mithya 2008 Hindi Movie AMZN WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/vISVPrVsNwXyYiUIb2gqV1asoXA.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/vISVPrVsNwXyYiUIb2gqV1asoXA.jpg"
+										class="mli-thumb"
+										alt="Mithya 2008 Hindi Movie AMZN WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Mithya 2008 Hindi Movie AMZN WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Mithya 2008 Hindi Movie AMZN WebRip 480p 720p 1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: 7.0</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2008/" rel="tag"
+											data-wpel-link="internal">2008</a></div>
+
+
+									<div class="jt-info">110 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>A two-bit actor faces challenges after he is asked by Police to impersonate a
+									look-alike gangster. &nbsp; &nbsp; Mithya 2008 Full Movie Download in 480p, 720p
+									&#038; 1080p MKV: &nbsp;&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2000-10/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2000-10</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/comedy/" rel="category tag"
+										data-wpel-link="internal">Comedy</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/crime/" rel="category tag"
+										data-wpel-link="internal">Crime</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/mithya-2008-hindi-movie-amzn-webrip-480p-720p-1080p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48633" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/parastree-2023-hindi-movie-mx-webrip-480p-720p-1080p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Parastree 2023 Hindi Movie MX WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Parastree 2023 Hindi Movie MX WebRip 480p 720p 1080p"
+									data-lazy-src="https://m.media-amazon.com/images/M/MV5BOGRlNzFjYmEtMGQyYy00MDI2LWFjMTQtZjE3NGZhYjIxNzg2XkEyXkFqcGdeQXVyMTAwNjA5MTA3._V1_UY268_CR16,0,182,268_AL_.jpg"><noscript><img
+										src="https://m.media-amazon.com/images/M/MV5BOGRlNzFjYmEtMGQyYy00MDI2LWFjMTQtZjE3NGZhYjIxNzg2XkEyXkFqcGdeQXVyMTAwNjA5MTA3._V1_UY268_CR16,0,182,268_AL_.jpg"
+										class="mli-thumb"
+										alt="Parastree 2023 Hindi Movie MX WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Parastree 2023 Hindi Movie MX WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Parastree 2023 Hindi Movie MX WebRip 480p 720p 1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2023/" rel="tag"
+											data-wpel-link="internal">2023</a></div>
+
+
+									<div class="jt-info">120 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>Dark thriller story occurring after an extramarital affair. &nbsp; &nbsp; Parastree
+									2023 Full Movie Download in 480p, 720p &#038; 1080p MKV: &nbsp; G-Drive [GDToT]
+									Links: Parastree 2023 WebRip 480p x265&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a>,&nbsp;<a
+										href="https://darklord8750.github.io/movieshubbyuvesh/country/nepal/" rel="tag"
+										data-wpel-link="internal">Nepal</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/thriller/" rel="category tag"
+										data-wpel-link="internal">Thriller</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/parastree-2023-hindi-movie-mx-webrip-480p-720p-1080p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48624" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/out-of-time-2021-hindi-movie-jc-webrip-480p-720p-1080p-2160p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Out Of Time 2021 Hindi Movie JC WebRip 480p 720p 1080p 2160p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Out Of Time 2021 Hindi Movie JC WebRip 480p 720p 1080p 2160p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/dI8HyO6Ttow4r3yvmGfMAysA7AO.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/dI8HyO6Ttow4r3yvmGfMAysA7AO.jpg"
+										class="mli-thumb"
+										alt="Out Of Time 2021 Hindi Movie JC WebRip 480p 720p 1080p 2160p"></noscript>
+								<span class="mli-info">
+									<h2>Out Of Time 2021 Hindi Movie JC WebRip 480p 720p 1080p 2160p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Out Of Time 2021 Hindi Movie JC WebRip 480p 720p 1080p
+									2160p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: 6.9</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2021/" rel="tag"
+											data-wpel-link="internal">2021</a></div>
+
+
+									<div class="jt-info">90 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>A troubled young man, puzzled by his father&#8217;s mysterious disappearance, goes to
+									a British era mansion along with his friends where he gets stuck in a never ending
+									time loop,&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2021/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2021</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/out-of-time-2021-hindi-movie-jc-webrip-480p-720p-1080p-2160p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48621" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/orange-lilly-2023-hindi-movie-jc-webrip-480p-720p-1080p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Orange Lilly 2023 Hindi Movie JC WebRip 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Orange Lilly 2023 Hindi Movie JC WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/puWGwGyVwbRy2nONXWsBW9uqV0X.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/puWGwGyVwbRy2nONXWsBW9uqV0X.jpg"
+										class="mli-thumb"
+										alt="Orange Lilly 2023 Hindi Movie JC WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Orange Lilly 2023 Hindi Movie JC WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Orange Lilly 2023 Hindi Movie JC WebRip 480p 720p 1080p
+								</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2023/" rel="tag"
+											data-wpel-link="internal">2023</a></div>
+
+
+									<div class="jt-info">87 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>Pratik intends to spend some romantic time with his mistress, Lily, at his farmhouse.
+									However, the situation takes a worrisome turn when Lily goes missing unexpectedly.
+									What twists and turns&#8230;</p>
+								</p>
+
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/orange-lilly-2023-hindi-movie-jc-webrip-480p-720p-1080p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48607" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/brahman-naman-2016-movie-nf-webrip-english-msubs-480p-720p-1080p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Brahman Naman 2016 Movie NF WebRip English MSubs 480p 720p 1080p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb"
+									alt="Brahman Naman 2016 Movie NF WebRip English MSubs 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/4h9Pn8gcyOk3ziqVXmI0amu6uOB.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/4h9Pn8gcyOk3ziqVXmI0amu6uOB.jpg"
+										class="mli-thumb"
+										alt="Brahman Naman 2016 Movie NF WebRip English MSubs 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Brahman Naman 2016 Movie NF WebRip English MSubs 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Brahman Naman 2016 Movie NF WebRip English MSubs 480p 720p
+									1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: 5.5</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2016/" rel="tag"
+											data-wpel-link="internal">2016</a></div>
+
+
+									<div class="jt-info">95 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>This homage to 1980s teen sex comedies follows a college quiz bowl champion who knows
+									almost everything &#8212; except how to talk to women. &nbsp; &nbsp; Brahman Naman
+									2016 Full&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a>,&nbsp;<a
+										href="https://darklord8750.github.io/movieshubbyuvesh/country/united-kingdom/" rel="tag"
+										data-wpel-link="internal">United Kingdom</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2016/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2016</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/comedy/" rel="category tag"
+										data-wpel-link="internal">Comedy</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/brahman-naman-2016-movie-nf-webrip-english-msubs-480p-720p-1080p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="46478" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/minus-31-the-nagpur-files-2023/" data-url=""
+								class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Minus 31 &#8211; The Nagpur Files 2023 Hindi Movie AMZN WebRip 480p 720p 1080p"
+								title="" data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb"
+									alt="Minus 31 &#8211; The Nagpur Files 2023 Hindi Movie AMZN WebRip 480p 720p 1080p"
+									data-lazy-src="https://m.media-amazon.com/images/M/MV5BOWU4MjdmZjAtODZkZC00Zjg5LWJiNTItMjMwY2U2YTBjY2RkXkEyXkFqcGdeQXVyNTA5OTM1MTA@._V1_UY268_CR16,0,182,268_AL_.jpg"><noscript><img
+										src="https://m.media-amazon.com/images/M/MV5BOWU4MjdmZjAtODZkZC00Zjg5LWJiNTItMjMwY2U2YTBjY2RkXkEyXkFqcGdeQXVyNTA5OTM1MTA@._V1_UY268_CR16,0,182,268_AL_.jpg"
+										class="mli-thumb"
+										alt="Minus 31 &#8211; The Nagpur Files 2023 Hindi Movie AMZN WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Minus 31 &#8211; The Nagpur Files 2023 Hindi Movie AMZN WebRip 480p 720p 1080p
+									</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Minus 31 &#8211; The Nagpur Files 2023 Hindi Movie AMZN
+									WebRip 480p 720p 1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2023/" rel="tag"
+											data-wpel-link="internal">2023</a></div>
+
+
+									<div class="jt-info">134 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>A murder has happened at the time of COVID, and the female cop is on duty to find the
+									murderer. &nbsp; &nbsp; Minus 31: The Nagpur Files 2023 Full Movie&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/minus-31-the-nagpur-files-2023/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48507" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/life-mein-kabhie-kabhiee-2007-hindi-movie-amzn-webrip-480p-720p-1080p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Life Mein Kabhie Kabhiee 2007 Hindi Movie AMZN WebRip 480p 720p 1080p"
+								title="" data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb"
+									alt="Life Mein Kabhie Kabhiee 2007 Hindi Movie AMZN WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/oWGQAoFeO1e2No16fT2L5E2UY9w.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/oWGQAoFeO1e2No16fT2L5E2UY9w.jpg"
+										class="mli-thumb"
+										alt="Life Mein Kabhie Kabhiee 2007 Hindi Movie AMZN WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Life Mein Kabhie Kabhiee 2007 Hindi Movie AMZN WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Life Mein Kabhie Kabhiee 2007 Hindi Movie AMZN WebRip 480p
+									720p 1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: 5.9</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2007/" rel="tag"
+											data-wpel-link="internal">2007</a></div>
+
+
+									<div class="jt-info">145 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>A story about friends and their ambitions. &nbsp; &nbsp; Life Mein Kabhie Kabhiee
+									2007 Full Movie Download in 480p, 720p &#038; 1080p MKV: &nbsp; G-Drive [GDToT]
+									Links: Life Mein Kabhie&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2000-10/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2000-10</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/life-mein-kabhie-kabhiee-2007-hindi-movie-amzn-webrip-480p-720p-1080p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48494" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/joram-2023/" data-url="" class="ml-mask jt"
+								data-hasqtip="112" oldtitle="Joram 2023 Hindi Movie PreDvd HQ S-Print 480p 720p 1080p"
+								title="" data-wpel-link="internal">
+
+								<span class="mli-quality">PreDvd</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Joram 2023 Hindi Movie PreDvd HQ S-Print 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/wykOtxx7rPxXPHgzyrEH6ZsH3sF.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/wykOtxx7rPxXPHgzyrEH6ZsH3sF.jpg"
+										class="mli-thumb"
+										alt="Joram 2023 Hindi Movie PreDvd HQ S-Print 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Joram 2023 Hindi Movie PreDvd HQ S-Print 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Joram 2023 Hindi Movie PreDvd HQ S-Print 480p 720p 1080p
+								</div>
+								<div class="jtip-quality">PreDvd</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2023/" rel="tag"
+											data-wpel-link="internal">2023</a></div>
+
+
+									<div class="jt-info">134 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>A man goes on the run from the police with his infant daughter when he is wrongfully
+									suspected of a crime. &nbsp; &nbsp; Joram 2023 Full Movie Download in 480p,&#8230;
+								</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/action/"
+										rel="category tag" data-wpel-link="internal">Action</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/adventure/" rel="category tag"
+										data-wpel-link="internal">Adventure</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/" rel="category tag"
+										data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/crime/" rel="category tag"
+										data-wpel-link="internal">Crime</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/thriller/" rel="category tag"
+										data-wpel-link="internal">Thriller</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/joram-2023/" class="btn btn-block btn-successful"
+										data-wpel-link="internal"><i class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="48488" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/kadak-singh-2023-hindi-zee5-movie-webrip-480p-720p-1080p-2160p/"
+								data-url="" class="ml-mask jt" data-hasqtip="112"
+								oldtitle="Kadak Singh 2023 Hindi Zee5 Movie WebRip 480p 720p 1080p 2160p" title=""
+								data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb"
+									alt="Kadak Singh 2023 Hindi Zee5 Movie WebRip 480p 720p 1080p 2160p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/eB7VUbPWvbohPvmYn22XAtpmcvU.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/eB7VUbPWvbohPvmYn22XAtpmcvU.jpg"
+										class="mli-thumb"
+										alt="Kadak Singh 2023 Hindi Zee5 Movie WebRip 480p 720p 1080p 2160p"></noscript>
+								<span class="mli-info">
+									<h2>Kadak Singh 2023 Hindi Zee5 Movie WebRip 480p 720p 1080p 2160p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Kadak Singh 2023 Hindi Zee5 Movie WebRip 480p 720p 1080p
+									2160p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2023/" rel="tag"
+											data-wpel-link="internal">2023</a></div>
+
+
+									<div class="jt-info">128 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>AK Shrivastav, a quirky patient suffering from retrograde amnesia, uncovers the
+									reason behind his condition while trying to recollect his life accurately&#8230;
+									&nbsp; &nbsp; Kadak Singh 2023 Full Movie Download&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/thriller/" rel="category tag"
+										data-wpel-link="internal">Thriller</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/kadak-singh-2023-hindi-zee5-movie-webrip-480p-720p-1080p-2160p/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+						<div data-movie-id="47514" class="ml-item">
+							<a href="https://darklord8750.github.io/movieshubbyuvesh/dhak-dhak-2023/" data-url="" class="ml-mask jt"
+								data-hasqtip="112" oldtitle="Dhak Dhak 2023 Hindi Movie NF WebRip 480p 720p 1080p"
+								title="" data-wpel-link="internal">
+
+								<span class="mli-quality">WebRip</span>
+
+
+								<img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E"
+									class="mli-thumb" alt="Dhak Dhak 2023 Hindi Movie NF WebRip 480p 720p 1080p"
+									data-lazy-src="https://image.tmdb.org/t/p/w185/jh4aFmZQXoSG6Ucy7doXiDy6EIN.jpg"><noscript><img
+										src="https://image.tmdb.org/t/p/w185/jh4aFmZQXoSG6Ucy7doXiDy6EIN.jpg"
+										class="mli-thumb"
+										alt="Dhak Dhak 2023 Hindi Movie NF WebRip 480p 720p 1080p"></noscript>
+								<span class="mli-info">
+									<h2>Dhak Dhak 2023 Hindi Movie NF WebRip 480p 720p 1080p</h2>
+								</span>
+							</a>
+
+							<div id="hidden_tip">
+								<div id="" class="qtip-title">Dhak Dhak 2023 Hindi Movie NF WebRip 480p 720p 1080p</div>
+								<div class="jtip-quality">WebRip</div>
+
+
+								<div class="jtip-top">
+									<div class="jt-info jt-imdb"> IMDb: N/A</div>
+
+
+									<div class="jt-info"><a href="https://darklord8750.github.io/movieshubbyuvesh/release-year/2023/" rel="tag"
+											data-wpel-link="internal">2023</a></div>
+
+
+									<div class="jt-info">140 min</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<p class="f-desc">
+								<p>Four women — a travel blogger, her biker granny, a makeshift mechanic and a young
+									girl set to be married — ride to the highest motorable pass in the world&#8230;</p>
+								</p>
+
+								<div class="block">Country:&nbsp;<a href="https://darklord8750.github.io/movieshubbyuvesh/country/india/"
+										rel="tag" data-wpel-link="internal">India</a></div>
+
+								<div class="block">Genre: <a href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/"
+										rel="category tag" data-wpel-link="internal">All Bollywood Movies</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/bollywood-movies-2023/"
+										rel="category tag" data-wpel-link="internal">Bollywood Movies 2023</a>, <a
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/drama/" rel="category tag"
+										data-wpel-link="internal">Drama</a> </div>
+
+								<div class="jtip-bottom">
+									<a href="https://darklord8750.github.io/movieshubbyuvesh/dhak-dhak-2023/"
+										class="btn btn-block btn-successful" data-wpel-link="internal"><i
+											class="fa fa-play-circle mr10"></i>
+										Watch Movie</a>
+
+									<a href="#pt-login" class="sl-button btn bp-btn-favorite"><i
+											class="fa fa-heart"></i> <span>Favorite</span></a>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="clearfix"></div>
 					</div>
 
-
-
-					<div class="clearfix"></div>
-				</div>
-
-
-
-
-				
-
-
-
+					<div id='pagination' style='margin-top:10px;'>
+						<nav>
+							<ul class='pagination'>
+								<li class='active'><a class=''>1</a></li>
+								<li><a rel="nofollow" class="page larger"
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/page/2/"
+										data-wpel-link="internal">2</a></li>
+								<li><a rel="nofollow" class="page larger"
+										href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/page/3/"
+										data-wpel-link="internal">3</a></li>
+								<li><a rel="nofollow" href="https://darklord8750.github.io/movieshubbyuvesh/category/bollywood-movies/page/85/"
+										data-wpel-link="internal">Last</a></li>
+							</ul>
+						</nav>
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>
-
-
 
 
 
@@ -3782,8 +6770,9 @@ In recent years, Bollywood has embraced technological advancements, experimentin
         </div>
     </footer>
 
+
 	<div class='code-block code-block-4' style='margin: 8px 0; clear: both;'>
-		<ins data-revive-zoneid="6" data-revive-cphost="43509b58b68d940f8734726dfed6c5c8|1|mkvcinemas.foo"
+		<ins data-revive-zoneid="6" data-revive-cphost="43509b58b68d940f8734726dfed6c5c8|1|https://darklord8750.github.io/movieshubbyuvesh/"
 			data-revive-id="1d63e790351363d29b61f9cf59b98fad"></ins>
 	</div>
 	<script type="rocketlazyloadscript"
@@ -3822,7 +6811,7 @@ In recent years, Bollywood has embraced technological advancements, experimentin
 /* ]]> */
 </script>
 	<script type="rocketlazyloadscript" data-rocket-type="text/javascript"
-		src="https://mkvcinemas.foo/data/themes/PsyPlay/assets/js/bootstrap.min.js" id="bootstrap-js" defer></script>
+		src="https://darklord8750.github.io/movieshubbyuvesh/data/themes/PsyPlay/assets/js/bootstrap.min.js" id="bootstrap-js" defer></script>
 	<script type="text/javascript" id="swp-live-search-client-js-extra">
 		/* <![CDATA[ */
 		var searchwp_live_search_params = [];
@@ -3830,7 +6819,7 @@ In recent years, Bollywood has embraced technological advancements, experimentin
 		/* ]]> */
 	</script>
 	<script type="rocketlazyloadscript" data-rocket-type="text/javascript"
-		src="https://mkvcinemas.foo/data/themes/PsyPlay/includes/plugins/livesearch/assets/javascript/build/psythemes-live-search.min.js"
+		src="https://darklord8750.github.io/movieshubbyuvesh/data/themes/PsyPlay/includes/plugins/livesearch/assets/javascript/build/psythemes-live-search.min.js"
 		id="swp-live-search-client-js" defer></script>
 	
 	<script>window.lazyLoadOptions = [{ elements_selector: "img[data-lazy-src],.rocket-lazyload,iframe[data-lazy-src]", data_src: "lazy-src", data_srcset: "lazy-srcset", data_sizes: "lazy-sizes", class_loading: "lazyloading", class_loaded: "lazyloaded", threshold: 300, callback_loaded: function (element) { if (element.tagName === "IFRAME" && element.dataset.rocketLazyload == "fitvidscompatible") { if (element.classList.contains("lazyloaded")) { if (typeof window.jQuery != "undefined") { if (jQuery.fn.fitVids) { jQuery(element).parent().fitVids() } } } } } }, { elements_selector: ".rocket-lazyload", data_src: "lazy-src", data_srcset: "lazy-srcset", data_sizes: "lazy-sizes", class_loading: "lazyloading", class_loaded: "lazyloaded", threshold: 300, }]; window.addEventListener('LazyLoad::Initialized', function (e) {
@@ -3848,7 +6837,7 @@ In recent years, Bollywood has embraced technological advancements, experimentin
 			}
 		}, !1)</script>
 	<script data-no-minify="1" async
-		src="https://mkvcinemas.foo/apps/wp-rocket/assets/js/lazyload/17.5/lazyload.min.js"></script>
+		src="https://darklord8750.github.io/movieshubbyuvesh/apps/wp-rocket/assets/js/lazyload/17.5/lazyload.min.js"></script>
 	<script>function lazyLoadThumb(e) { var t = '<img data-lazy-src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360"><noscript><img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360"></noscript>', a = '<button class="play" aria-label="play Youtube video"></button>'; return t.replace("ID", e) + a } function lazyLoadYoutubeIframe() { var e = document.createElement("iframe"), t = "ID?autoplay=1"; t += 0 === this.parentNode.dataset.query.length ? '' : '&' + this.parentNode.dataset.query; e.setAttribute("src", t.replace("ID", this.parentNode.dataset.src)), e.setAttribute("frameborder", "0"), e.setAttribute("allowfullscreen", "1"), e.setAttribute("allow", "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"), this.parentNode.parentNode.replaceChild(e, this.parentNode) } document.addEventListener("DOMContentLoaded", function () { var e, t, p, a = document.getElementsByClassName("rll-youtube-player"); for (t = 0; t < a.length; t++)e = document.createElement("div"), e.setAttribute("data-id", a[t].dataset.id), e.setAttribute("data-query", a[t].dataset.query), e.setAttribute("data-src", a[t].dataset.src), e.innerHTML = lazyLoadThumb(a[t].dataset.id), a[t].appendChild(e), p = e.querySelector('.play'), p.onclick = lazyLoadYoutubeIframe });</script>
 </body>
 
